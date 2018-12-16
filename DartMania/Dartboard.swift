@@ -9,15 +9,11 @@
 import UIKit
 import GameplayKit
 
-class Dartboard: SKShapeNode {
+class Dartboard: NSObject {
 
     var elements: [DartboardElement]
     var numberOfFields: Int
     
-    override init() {
-        // super.init()
-        // createDartboardElements()
-    }
     
     func createDartboardElements () {
         

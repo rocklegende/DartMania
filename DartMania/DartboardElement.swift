@@ -11,12 +11,7 @@ import GameplayKit
 
 class DartboardElement: SKShapeNode {
 
-    private var points: Int
-    
-    init(points: Int) {
-        super.init()
-        self.points = points
-    }
+    var points: Int
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
