@@ -27,8 +27,8 @@ class GameScene: SKScene {
         self.isUserInteractionEnabled = true
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -20.0)
         
-        self.dartboard = Dartboard()
-        self.view?.addSubview(dartboard.view!)
+        self.dartboard = Dartboard(gameScene: self)
+        // maybe better: for every dartboardelement in dartboard.elements: addChild(element)
         
         self.dart = Dart()
         self.addChild(dart.node!)

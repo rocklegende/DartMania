@@ -9,9 +9,15 @@
 import UIKit
 import GameplayKit
 
-class DartboardElement: SKShapeNode {
+class DartboardElement {
 
     var points: Int
+    var field: CAShapeLayer
+    
+    init(points: Int) {
+        self.points = points
+        self.field = CAShapeLayer()
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

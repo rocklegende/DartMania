@@ -14,28 +14,30 @@ class Dartboard {
     // var elements = 0
     // var numberOfFields: Int = 0
     
-    var view: UIView?
+    var gameScene: SKScene?
     
-    init() {
-        self.view = UIView(frame: UIScreen.main.bounds)
+    init(gameScene: SKScene) {
+        self.gameScene = gameScene
         createSingleArc()
     }
     
     func createSingleArc() {
-        let layer = CAShapeLayer()
+        let outerArc = SKShapeNode()
         let path = UIBezierPath(arcCenter: CGPoint(x: 100, y: 200), radius: 30, startAngle: 0, endAngle: 2*CGFloat.pi, clockwise: true).cgPath
-        layer.path = path
-        layer.fillColor = UIColor.red.cgColor
-        self.view!.layer.addSublayer(layer)
+        outerArc.path = path
+        outerArc.fillColor = UIColor.red
+        outerArc.strokeColor = UIColor.red
+        gameScene?.addChild(outerArc)
         
-        let innerArc = CAShapeLayer()
+        let innerArc = SKShapeNode()
         innerArc.path = UIBezierPath(arcCenter: CGPoint(x: 100, y: 200), radius: 20, startAngle: 0, endAngle: 2*CGFloat.pi, clockwise: true).cgPath
-        innerArc.fillColor = UIColor.black.cgColor
-        self.view!.layer.addSublayer(innerArc)
+        innerArc.fillColor = UIColor.black
+        innerArc.fillColor = UIColor.black
+        gameScene?.addChild(innerArc)
     }
     
     func getHitPoints(point: CGPoint) -> Int {
-        
+        /*
         guard let sublayers = self.view!.layer.sublayers as? [CAShapeLayer] else { return -1 }
         for layer in sublayers {
             if (layer.path?.contains(point))! {
@@ -43,7 +45,9 @@ class Dartboard {
                 return 10
             }
         }
+         */
         return 0
+ 
     }
     
     
