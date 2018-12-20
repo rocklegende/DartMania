@@ -17,7 +17,7 @@ struct TossingAngles {
 class GameScene: SKScene {
     // private var dart: DartNode?
     private var dart: Dart!
-    private var dartboard: Dartboard?
+    private var dartboard: Dartboard!
     
     private var swipeStartPoint: CGPoint?
     private var swipeEndPoint: CGPoint?
@@ -25,6 +25,10 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         
         self.isUserInteractionEnabled = true
+        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -20.0)
+        
+        self.dartboard = Dartboard()
+        self.view?.addSubview(dartboard.view!)
         
         self.dart = Dart()
         self.addChild(dart.node!)
@@ -41,7 +45,8 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touchPoint = touches.first?.location(in: self) {
             if (dart.node.contains(touchPoint)) {
-                swipeStartPoint = touches.first?.location(in: self)
+                swipeStartPoint = touchPoint
+                print(swipeStartPoint)
             } else {
                 print("touch the ball!")
             }
@@ -67,6 +72,13 @@ class GameScene: SKScene {
                 let angles = getAngles(directionVector: directionVector)
                 
                 dart.toss(angles: angles)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                    print(self.dart.node.position)
+                    let points = self.dartboard.getHitPoints(point: self.convertPoint(toView: self.dart.node.position))
+                    print(points)
+                })
+                
+                
                 
                 swipeStartPoint = nil
                 swipeEndPoint = nil

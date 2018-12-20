@@ -10,9 +10,6 @@ import UIKit
 import GameplayKit
 
 class Dart {
-    
-    
-    
     var node: SKSpriteNode!
     
     init() {
