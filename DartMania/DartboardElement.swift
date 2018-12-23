@@ -12,11 +12,14 @@ import GameplayKit
 class DartboardElement {
 
     var points: Int
-    var field: CAShapeLayer
+    var node: SKShapeNode
     
-    init(points: Int) {
+    init(points: Int, path: UIBezierPath, color: UIColor) {
         self.points = points
-        self.field = CAShapeLayer()
+        self.node = SKShapeNode()
+        self.node.path = path.cgPath
+        self.node.fillColor = color
+        self.node.strokeColor = color
     }
     
     required init?(coder aDecoder: NSCoder) {

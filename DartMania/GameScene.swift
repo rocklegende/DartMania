@@ -44,9 +44,10 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touchPoint = touches.first?.location(in: self) {
+            print(dartboard.getHitPoints(point: touchPoint))
             if (dart.node.contains(touchPoint)) {
                 swipeStartPoint = touchPoint
-                print(swipeStartPoint)
+                //print(swipeStartPoint)
             } else {
                 print("touch the ball!")
             }
