@@ -40,15 +40,6 @@ class Dartboard {
     }
     
     func getHitPoints(point: CGPoint) -> Int {
-        /*
-        guard let sublayers = self.view!.layer.sublayers as? [CAShapeLayer] else { return -1 }
-        for layer in sublayers {
-            if (layer.path?.contains(point))! {
-                // return layer.points
-                return 10
-            }
-        }
-         */
         var points = 0
         for element in elements {
             if (element.node.path?.contains(point))! {
@@ -56,7 +47,6 @@ class Dartboard {
             }
         }
         return points
- 
     }
     
     func addField (points: Int, position: Int) {
@@ -64,15 +54,11 @@ class Dartboard {
         // Wichtig: versetzt um 9 Grad am anfang! also z.B. das 1er Feld: 9 Grad - 27 Grad
         
         let offset = Double.pi / Double(Settings.pointsArray.count)
-        let trippleColor = position % 2 == 0 ? UIColor.black : UIColor.green
-        let singleColor = position % 2 == 0 ? UIColor.red : UIColor.white
+        let trippleColor = position % 2 == 0 ? Settings.dartBoardBlack : Settings.dartBoardGreen
+        let singleColor = position % 2 == 0 ? Settings.dartBoardRed : Settings.dartBoardWhite
         
         let startingAngle = CGFloat(offset) + (CGFloat(position) / CGFloat(Settings.pointsArray.count)) * (2 * CGFloat.pi)
         let endAngle = CGFloat(offset) + (CGFloat(position + 1) / CGFloat(Settings.pointsArray.count)) * (2 * CGFloat.pi)
-        
-        print("")
-        print(startingAngle)
-        print(endAngle)
         
         addSingleField(points: 2 * points, radius: 220, startAngle: startingAngle, endAngle: endAngle, color: trippleColor)
         
