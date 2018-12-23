@@ -22,7 +22,7 @@ class Dart {
     func getDirectionVector(angles: TossingAngles) -> CGVector {
         
         //TODO: calculate dx
-        let dx = CGFloat(0.0)
+        var dx = UIScreen.main.bounds.size.width * angles.xAngle / Settings.X_MAX_ANGLE
         let dy = UIScreen.main.bounds.size.height * angles.yAngle / Settings.Y_MAX_ANGLE
         
         return CGVector(dx: dx, dy: dy)
@@ -45,7 +45,7 @@ class Dart {
         print("")
         print("Direction Vector: \(directionVector)")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
             self.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             self.node.physicsBody?.affectedByGravity = false
         })

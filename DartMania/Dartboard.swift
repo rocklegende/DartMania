@@ -10,9 +10,6 @@ import UIKit
 import GameplayKit
 
 class Dartboard {
-
-    // var elements = 0
-    // var numberOfFields: Int = 0
     
     var gameScene: SKScene?
     var elements: [DartboardElement]
