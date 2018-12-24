@@ -10,6 +10,12 @@ import UIKit
 
 class Settings {
     
+    // FONT //
+    static let pointLabelFontSize: CGFloat = 32
+    
+    // DEFAULTS //
+    static let defaultCenter: CGPoint = CGPoint(x: 0, y: UIScreen.main.bounds.height * 0.3)
+    
     // POINTS //
     static let pointsArray: [Int] = [13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6]
     

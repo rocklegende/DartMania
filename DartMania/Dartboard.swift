@@ -13,9 +13,13 @@ class Dartboard {
     
     var gameScene: SKScene?
     var elements: [DartboardElement]
+    var center: CGPoint
+    var radius: CGFloat
     
-    init(gameScene: SKScene) {
+    init(gameScene: SKScene, center: CGPoint, radius: CGFloat) {
         self.gameScene = gameScene
+        self.center = center
+        self.radius = radius
         self.elements = []
         // createSingleArc()
         createDartboardElements()
@@ -57,16 +61,21 @@ class Dartboard {
         // Wichtig: versetzt um 9 Grad am anfang! also z.B. das 1er Feld: 9 Grad - 27 Grad
         
         let offset = Double.pi / Double(Settings.pointsArray.count)
-        let trippleColor = position % 2 == 0 ? Settings.dartBoardBlack : Settings.dartBoardGreen
-        let singleColor = position % 2 == 0 ? Settings.dartBoardRed : Settings.dartBoardWhite
+        let trippleColor = position % 2 == 0 ? Settings.dartBoardRed : Settings.dartBoardGreen
+        let singleColor = position % 2 == 0 ? Settings.dartBoardBlack : Settings.dartBoardWhite
         
         let startingAngle = CGFloat(offset) + (CGFloat(position) / CGFloat(Settings.pointsArray.count)) * (2 * CGFloat.pi)
         let endAngle = CGFloat(offset) + (CGFloat(position + 1) / CGFloat(Settings.pointsArray.count)) * (2 * CGFloat.pi)
         
         let mid = (startingAngle + endAngle) / 2
         
+        addSingleField(points: 0, radius: radius, startAngle: startingAngle, endAngle: endAngle, color: Settings.dartBoardBlack)
+        
         // 240 equal to radius of the dartboard
-        addFieldLabel(points: points, position: CGPoint(x: cos(mid) * 240, y: sin(mid) * 240 + 190))
+        addFieldLabel(
+            points: points,
+            position: CGPoint(x: cos(mid) * 240, y: sin(mid) * 240 + (self.center.y - Settings.pointLabelFontSize / 2))
+        )
         
         addSingleField(points: 2 * points, radius: 220, startAngle: startingAngle, endAngle: endAngle, color: trippleColor)
         
@@ -106,8 +115,8 @@ class Dartboard {
         // TODO: wirklich nur ringsegment erstellen mit 2 arc paths und 2 linien
         
         
-        let path = UIBezierPath(arcCenter: CGPoint(x: 0, y: 200), radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
-        path.addLine(to: CGPoint(x: 0, y: 200))
+        let path = UIBezierPath(arcCenter: self.center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        path.addLine(to: self.center)
         let field = DartboardElement(points: points, path: path, color: color)
         gameScene?.addChild(field.node)
         self.elements.append(field)
@@ -119,6 +128,7 @@ class Dartboard {
         let label = SKLabelNode(text: "\(points)")
         label.position = position
         label.fontName = "AppleSDGothicNeo-Bold"
+        label.fontSize = Settings.pointLabelFontSize
         gameScene?.addChild(label)
     }
     
