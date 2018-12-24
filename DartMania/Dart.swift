@@ -30,7 +30,6 @@ class Dart {
     
     func toss(angles: TossingAngles) {
         //
-        print("weeeee")
         
         let directionVector = getDirectionVector(angles: angles)
         
@@ -42,8 +41,6 @@ class Dart {
                 dy: 0.1 * directionVector.dy
             )
         )
-        print("")
-        print("Direction Vector: \(directionVector)")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
             self.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)

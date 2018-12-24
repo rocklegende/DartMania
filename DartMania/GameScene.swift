@@ -52,11 +52,9 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touchPoint = touches.first?.location(in: self) {
-            print(dartboard.getHitPoints(point: touchPoint))
-            print(touchPoint)
+            //print(dartboard.getHitPoints(point: touchPoint))
             if (dart.node.contains(touchPoint)) {
                 swipeStartPoint = touchPoint
-                //print(swipeStartPoint)
             } else {
                 print("touch the ball!")
             }
@@ -83,9 +81,6 @@ class GameScene: SKScene {
                 
                 dart.toss(angles: angles)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
-                    print(self.dart.node.frame)
-                    print(self.dart.node.frame.minX)
-                    print(self.dart.node.frame.minY)
                     let dartTouchPoint = CGPoint(x: self.dart.node.frame.minX, y: self.dart.node.frame.minY)
                     self.label.text = "Points: \(self.dartboard.getHitPoints(point: dartTouchPoint))"
                 })
@@ -116,12 +111,9 @@ class GameScene: SKScene {
     func getAngles(directionVector: CGVector) -> TossingAngles {
         
         let yMaxPixelDirection = UIScreen.main.bounds.size.height
-        print(yMaxPixelDirection)
         let yAngle = Settings.Y_MAX_ANGLE * (directionVector.dy / yMaxPixelDirection)
-        print(yAngle)
         
         var xMaxPixelDirection = UIScreen.main.bounds.size.width
-        print(xMaxPixelDirection)
         var xAngle = CGFloat(0.0)
         if (directionVector.dx < 0) {
             xMaxPixelDirection = -xMaxPixelDirection
@@ -129,7 +121,6 @@ class GameScene: SKScene {
         } else {
             xAngle = Settings.X_MAX_ANGLE * (directionVector.dx / xMaxPixelDirection)
         }
-        print(xAngle)
         
         return TossingAngles(xAngle: xAngle, yAngle: yAngle)
         

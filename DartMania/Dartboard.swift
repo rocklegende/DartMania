@@ -21,6 +21,12 @@ class Dartboard {
         createDartboardElements()
     }
     
+    //    init(gameScene: SKScene, radius, center, colorset = Settings.defaultColors, pointsArray = Settings.pointsArray) {
+//        self.gameScene = gameScene
+//        self.elements = []
+//        createDartboardElements()
+//    }
+    
     func createSingleArc() {
         let outerArc = SKShapeNode()
         let path = UIBezierPath(arcCenter: CGPoint(x: 100, y: 200), radius: 30, startAngle: 0, endAngle: 2*CGFloat.pi, clockwise: true).cgPath
@@ -57,6 +63,11 @@ class Dartboard {
         let startingAngle = CGFloat(offset) + (CGFloat(position) / CGFloat(Settings.pointsArray.count)) * (2 * CGFloat.pi)
         let endAngle = CGFloat(offset) + (CGFloat(position + 1) / CGFloat(Settings.pointsArray.count)) * (2 * CGFloat.pi)
         
+        let mid = (startingAngle + endAngle) / 2
+        
+        // 240 equal to radius of the dartboard
+        addFieldLabel(points: points, position: CGPoint(x: cos(mid) * 240, y: sin(mid) * 240 + 190))
+        
         addSingleField(points: 2 * points, radius: 220, startAngle: startingAngle, endAngle: endAngle, color: trippleColor)
         
         addSingleField(points: 0, radius: 203, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
@@ -70,6 +81,14 @@ class Dartboard {
         addSingleField(points: 0, radius: 123, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
         
         addSingleField(points: points, radius: 120, startAngle: startingAngle, endAngle: endAngle, color: singleColor)
+        
+        addSingleField(points: 0, radius: 23, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
+        
+        addSingleField(points: 25, radius: 20, startAngle: startingAngle, endAngle: endAngle, color: Settings.dartBoardGreen)
+        
+        addSingleField(points: 0, radius: 13, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
+        
+        addSingleField(points: 50, radius: 10, startAngle: startingAngle, endAngle: endAngle, color: Settings.dartBoardRed)
         
         
         // - according to that position get the right starting and end angles for the arc
@@ -93,6 +112,14 @@ class Dartboard {
         gameScene?.addChild(field.node)
         self.elements.append(field)
         // gameScene.addChild(element.node)
+    }
+    
+    func addFieldLabel(points: Int, position: CGPoint) {
+        
+        let label = SKLabelNode(text: "\(points)")
+        label.position = position
+        label.fontName = "AppleSDGothicNeo-Bold"
+        gameScene?.addChild(label)
     }
     
     
