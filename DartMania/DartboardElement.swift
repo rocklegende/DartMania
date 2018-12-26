@@ -9,13 +9,17 @@
 import UIKit
 import GameplayKit
 
-class DartboardElement: SKShapeNode {
+class DartboardElement {
 
-    private var points: Int
+    var points: Int
+    var node: SKShapeNode
     
-    init(points: Int) {
-        super.init()
+    init(points: Int, path: UIBezierPath, color: UIColor) {
         self.points = points
+        self.node = SKShapeNode()
+        self.node.path = path.cgPath
+        self.node.fillColor = color
+        self.node.strokeColor = color
     }
     
     required init?(coder aDecoder: NSCoder) {
