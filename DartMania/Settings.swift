@@ -10,11 +10,27 @@ import UIKit
 
 class Settings {
     
+    // DARTBOARD RADIUSESS //
+    static let outerRing: CGFloat = 220.0/220.0
+    static let outerLabels: CGFloat = 190.0/220.0
+    static let outerDoubleWire: CGFloat = 170.0/220.0
+    static let doubleRing: CGFloat = 168.5/220.0
+    static let innerDoubleWire: CGFloat = 160.5/220.0
+    static let outerSingleRing: CGFloat = 159.0/220.0
+    static let outerTrippleWire: CGFloat = 107.0/220.0
+    static let trippleRing: CGFloat = 105.5/220.0
+    static let innerTrippleWire: CGFloat = 97.5/220.0
+    static let innerSingleRing: CGFloat = 96.0/220.0
+    static let halfBullsEyeWire: CGFloat = 17.4/220.0
+    static let halfBullsEye: CGFloat = 15.9/220.0
+    static let bullsEyeWire: CGFloat = 7.85/220.0
+    static let bullsEye: CGFloat = 6.35/220.0
+    
     // FONT //
-    static let pointLabelFontSize: CGFloat = 32
+    static let pointLabelFontSize: CGFloat = 40
     
     // DEFAULTS //
-    static let defaultCenter: CGPoint = CGPoint(x: 0, y: UIScreen.main.bounds.height * 0.3)
+    static let defaultCenter: CGPoint = CGPoint(x: 0, y: UIScreen.main.bounds.height * 0.4)
     
     // POINTS //
     static let pointsArray: [Int] = [13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6]
