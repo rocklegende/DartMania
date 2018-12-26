@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		401406CD21D3E15C006D7F6F /* GameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */; };
 		40184154217CC17C0073477A /* Dartboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40184153217CC17C0073477A /* Dartboard.swift */; };
 		40184156217CC6490073477A /* DartboardElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40184155217CC6490073477A /* DartboardElement.swift */; };
 		40207F5A214ED734002E71B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40207F59214ED734002E71B4 /* AppDelegate.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsViewController.swift; sourceTree = "<group>"; };
 		40184153217CC17C0073477A /* Dartboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dartboard.swift; sourceTree = "<group>"; };
 		40184155217CC6490073477A /* DartboardElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartboardElement.swift; sourceTree = "<group>"; };
 		40207F56214ED734002E71B4 /* DartMania.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DartMania.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +76,7 @@
 			children = (
 				40207F59214ED734002E71B4 /* AppDelegate.swift */,
 				40207F75215B5FA5002E71B4 /* Helper.swift */,
+				401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */,
 				40184153217CC17C0073477A /* Dartboard.swift */,
 				40184155217CC6490073477A /* DartboardElement.swift */,
 				40207F73214EDF21002E71B4 /* DartNode.swift */,
@@ -171,6 +174,7 @@
 				40184156217CC6490073477A /* DartboardElement.swift in Sources */,
 				40207F76215B5FA5002E71B4 /* Helper.swift in Sources */,
 				40184154217CC17C0073477A /* Dartboard.swift in Sources */,
+				401406CD21D3E15C006D7F6F /* GameSettingsViewController.swift in Sources */,
 				4062927921C5908D004AC627 /* Settings.swift in Sources */,
 				40207F74214EDF21002E71B4 /* DartNode.swift in Sources */,
 				40207F5A214ED734002E71B4 /* AppDelegate.swift in Sources */,

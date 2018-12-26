@@ -26,4 +26,13 @@ class Helper {
     static func angleToVector(angle: CGFloat, maxVector: CGFloat, minVector: CGFloat, maxAngle: CGFloat, minAngle: CGFloat) {
         
     }
+    
+    static func getDirectionVector(angles: TossingAngles) -> CGVector {
+        
+        //TODO: calculate dx
+        let dx = UIScreen.main.bounds.size.width * angles.xAngle / Settings.X_MAX_ANGLE
+        let dy = UIScreen.main.bounds.size.height * angles.yAngle / Settings.Y_MAX_ANGLE
+        
+        return CGVector(dx: dx, dy: dy)
+    }
 }

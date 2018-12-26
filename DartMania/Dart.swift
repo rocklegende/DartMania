@@ -19,19 +19,12 @@ class Dart {
         node.physicsBody?.mass = 0.02 // 20 Gramm
     }
     
-    func getDirectionVector(angles: TossingAngles) -> CGVector {
-        
-        //TODO: calculate dx
-        var dx = UIScreen.main.bounds.size.width * angles.xAngle / Settings.X_MAX_ANGLE
-        let dy = UIScreen.main.bounds.size.height * angles.yAngle / Settings.Y_MAX_ANGLE
-        
-        return CGVector(dx: dx, dy: dy)
-    }
+    
     
     func toss(angles: TossingAngles) {
         //
         
-        let directionVector = getDirectionVector(angles: angles)
+        let directionVector = Helper.getDirectionVector(angles: angles)
         
         node.physicsBody?.affectedByGravity = true
         node.physicsBody?.applyImpulse(
