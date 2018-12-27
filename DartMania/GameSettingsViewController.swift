@@ -24,7 +24,6 @@ class GameSettingsViewController: UIViewController {
         
         let modeSwitch = UISegmentedControl(items: Settings.availableModes)
         modeSwitch.addTarget(self, action: #selector(handleModeChange(sender:)), for: .valueChanged)
-        modeSwitch.center = self.view.center
         modeSwitch.selectedSegmentIndex = 1
         
         modeSwitch.layer.cornerRadius = 5.0
@@ -37,6 +36,19 @@ class GameSettingsViewController: UIViewController {
         modeSwitch.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         modeSwitch.widthAnchor.constraint(equalToConstant: 200).isActive = true
         modeSwitch.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        let modeSwitchLabel = UILabel()
+        modeSwitchLabel.text = "Mode"
+        self.view.addSubview(modeSwitchLabel)
+        
+        modeSwitchLabel.translatesAutoresizingMaskIntoConstraints = false
+        modeSwitchLabel.leftAnchor.constraint(equalTo: modeSwitch.leftAnchor).isActive = true
+        modeSwitchLabel.bottomAnchor.constraint(equalTo: modeSwitch.topAnchor).isActive = true
+        modeSwitchLabel.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        modeSwitchLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        
+        
         
         
         
@@ -55,6 +67,16 @@ class GameSettingsViewController: UIViewController {
         playerCountSwitch.topAnchor.constraint(equalTo: modeSwitch.bottomAnchor, constant: 50).isActive = true
         playerCountSwitch.widthAnchor.constraint(equalTo: modeSwitch.widthAnchor).isActive = true
         playerCountSwitch.heightAnchor.constraint(equalTo: modeSwitch.heightAnchor).isActive = true
+        
+        let playerCountSwitchLabel = UILabel()
+        playerCountSwitchLabel.text = "Player"
+        self.view.addSubview(playerCountSwitchLabel)
+        
+        playerCountSwitchLabel.translatesAutoresizingMaskIntoConstraints = false
+        playerCountSwitchLabel.leftAnchor.constraint(equalTo: playerCountSwitch.leftAnchor).isActive = true
+        playerCountSwitchLabel.bottomAnchor.constraint(equalTo: playerCountSwitch.topAnchor).isActive = true
+        playerCountSwitchLabel.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        playerCountSwitchLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         
         

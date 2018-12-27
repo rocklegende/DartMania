@@ -29,6 +29,7 @@ class GameScene: SKScene {
         if let gameSettings = self.userData?.value(forKey: "gameSettings") as? DartGameSettings {
             print(gameSettings.getMode())
             print(gameSettings.getPlayerCount())
+            settings = gameSettings
         }
         
         self.isUserInteractionEnabled = true
