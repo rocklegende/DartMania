@@ -13,9 +13,11 @@ class DartboardElement {
 
     var points: Int
     var node: SKShapeNode
+    var isDoubleField: Bool
     
-    init(points: Int, path: UIBezierPath, color: UIColor) {
+    init(points: Int, path: UIBezierPath, color: UIColor, isDoubleField: Bool) {
         self.points = points
+        self.isDoubleField = isDoubleField
         self.node = SKShapeNode()
         self.node.path = path.cgPath
         self.node.fillColor = color

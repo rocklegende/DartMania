@@ -79,7 +79,7 @@ class Dartboard {
         
         addSingleField(points: 0, radius: self.radius * Settings.outerDoubleWire, startAngle: startingAngle, endAngle: endAngle, color: trippleColor)
         
-        addSingleField(points: 2 * points, radius: self.radius * Settings.doubleRing, startAngle: startingAngle, endAngle: endAngle, color: trippleColor)
+        addSingleField(points: 2 * points, radius: self.radius * Settings.doubleRing, startAngle: startingAngle, endAngle: endAngle, color: trippleColor, isDoubleField: true)
         
         addSingleField(points: 0, radius: self.radius * Settings.innerDoubleWire, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
         
@@ -103,14 +103,14 @@ class Dartboard {
         
     }
     
-    func addSingleField (points: Int, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, color: UIColor) {
+    func addSingleField (points: Int, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, color: UIColor, isDoubleField: Bool = false) {
         
         // TODO: wirklich nur ringsegment erstellen mit 2 arc paths und 2 linien
         
         
         let path = UIBezierPath(arcCenter: self.center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
         path.addLine(to: self.center)
-        let field = DartboardElement(points: points, path: path, color: color)
+        let field = DartboardElement(points: points, path: path, color: color, isDoubleField: isDoubleField)
         gameScene?.addChild(field.node)
         self.elements.append(field)
         // gameScene.addChild(element.node)
