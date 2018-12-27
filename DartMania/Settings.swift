@@ -10,6 +10,10 @@ import UIKit
 
 class Settings {
     
+    // GAMEPLAY //
+    static let availableModes: [String] = ["301", "501", "701"]
+    static let availablePlayerCounts: [String] = ["1", "2", "3", "4"]
+    
     // DARTBOARD RADIUSESS //
     static let outerRing: CGFloat = 220.0/220.0
     static let outerLabels: CGFloat = 190.0/220.0

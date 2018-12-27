@@ -11,6 +11,12 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    
+    var settings: DartGameSettings?
+    
+    override func loadView() {
+        self.view = SKView()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +26,8 @@ class GameViewController: UIViewController {
             if let scene = SKScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
+                scene.userData = NSMutableDictionary()
+                scene.userData?.setObject(settings ?? DartGameSettings(), forKey: "gameSettings" as NSCopying)
                 
                 // Present the scene
                 view.presentScene(scene)

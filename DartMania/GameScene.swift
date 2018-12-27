@@ -15,7 +15,8 @@ struct TossingAngles {
 }
 
 class GameScene: SKScene {
-    // private var dart: DartNode?
+    var settings: DartGameSettings?
+    
     private var dart: Dart!
     private var dartboard: Dartboard!
     private var label: SKLabelNode!
@@ -24,6 +25,10 @@ class GameScene: SKScene {
     private var swipeEndPoint: CGPoint?
     
     override func didMove(to view: SKView) {
+        
+        if let gameSettings = self.userData?.value(forKey: "gameSettings") as? DartGameSettings {
+            print(gameSettings.getMode())
+        }
         
         self.isUserInteractionEnabled = true
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -20.0)
