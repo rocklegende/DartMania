@@ -93,10 +93,8 @@ class GameSettingsViewController: UIViewController {
     }
     
     @objc func startLocalGame() {
-        print("segue to game")
-        
         let game = GameViewController()
-        
+        game.settings = settings
         present(game, animated: true, completion: nil)
     }
     
