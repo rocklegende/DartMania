@@ -33,8 +33,9 @@ class Settings {
     // FONT //
     static let pointLabelFontSize: CGFloat = 40
     
-    // DEFAULTS //
+    // DEFAULTS SIZES//
     static let defaultCenter: CGPoint = CGPoint(x: 0, y: UIScreen.main.bounds.height * 0.4)
+    static let defaultDartBoardRadius: CGFloat = UIScreen.main.bounds.width
     
     // POINTS //
     static let pointsArray: [Int] = [13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6]

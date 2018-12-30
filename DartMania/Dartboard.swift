@@ -21,29 +21,7 @@ class Dartboard {
         self.center = center
         self.radius = radius
         self.elements = []
-        // createSingleArc()
         createDartboardElements()
-    }
-    
-    //    init(gameScene: SKScene, radius, center, colorset = Settings.defaultColors, pointsArray = Settings.pointsArray) {
-//        self.gameScene = gameScene
-//        self.elements = []
-//        createDartboardElements()
-//    }
-    
-    func createSingleArc() {
-        let outerArc = SKShapeNode()
-        let path = UIBezierPath(arcCenter: CGPoint(x: 100, y: 200), radius: 30, startAngle: 0, endAngle: 2*CGFloat.pi, clockwise: true).cgPath
-        outerArc.path = path
-        outerArc.fillColor = UIColor.red
-        outerArc.strokeColor = UIColor.red
-        gameScene?.addChild(outerArc)
-        
-        let innerArc = SKShapeNode()
-        innerArc.path = UIBezierPath(arcCenter: CGPoint(x: 100, y: 200), radius: 20, startAngle: 0, endAngle: 2*CGFloat.pi, clockwise: true).cgPath
-        innerArc.fillColor = UIColor.black
-        innerArc.fillColor = UIColor.black
-        gameScene?.addChild(innerArc)
     }
     
     func getHitPoints(point: CGPoint) -> Int {
@@ -71,34 +49,21 @@ class Dartboard {
         
         addSingleField(points: 0, radius: self.radius * Settings.outerRing, startAngle: startingAngle, endAngle: endAngle, color: Settings.dartBoardBlack)
         
-        // 240 equal to radius of the dartboard
         addFieldLabel(
             points: points,
             position: CGPoint(x: cos(mid) * self.radius * Settings.outerLabels, y: sin(mid) * self.radius * Settings.outerLabels + (self.center.y - Settings.pointLabelFontSize / 2.5))
         )
-        
         addSingleField(points: 0, radius: self.radius * Settings.outerDoubleWire, startAngle: startingAngle, endAngle: endAngle, color: trippleColor)
-        
         addSingleField(points: 2 * points, radius: self.radius * Settings.doubleRing, startAngle: startingAngle, endAngle: endAngle, color: trippleColor, isDoubleField: true)
-        
         addSingleField(points: 0, radius: self.radius * Settings.innerDoubleWire, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
-        
         addSingleField(points: points, radius: self.radius * Settings.outerSingleRing, startAngle: startingAngle, endAngle: endAngle, color: singleColor)
-        
         addSingleField(points: 0, radius: self.radius * Settings.outerTrippleWire, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
-        
         addSingleField(points: 3 * points, radius: self.radius * Settings.trippleRing, startAngle: startingAngle, endAngle: endAngle, color: trippleColor)
-        
         addSingleField(points: 0, radius: self.radius * Settings.innerTrippleWire, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
-        
         addSingleField(points: points, radius: self.radius * Settings.innerSingleRing, startAngle: startingAngle, endAngle: endAngle, color: singleColor)
-        
         addSingleField(points: 0, radius: self.radius * Settings.halfBullsEyeWire, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
-        
         addSingleField(points: 25, radius: self.radius * Settings.halfBullsEye, startAngle: startingAngle, endAngle: endAngle, color: Settings.dartBoardGreen)
-        
         addSingleField(points: 0, radius: self.radius * Settings.bullsEyeWire, startAngle: startingAngle, endAngle: endAngle, color: UIColor.gray)
-        
         addSingleField(points: 50, radius: self.radius * Settings.bullsEye, startAngle: startingAngle, endAngle: endAngle, color: Settings.dartBoardRed)
         
     }
