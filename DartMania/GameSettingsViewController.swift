@@ -16,12 +16,6 @@ class GameSettingsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Settings.dartBoardWhite
         
-//        let modeSwitch = UISwitch(frame: CGRect(x: 150, y: 300, width: 0, height: 0))
-//        modeSwitch.isOn = true
-//        modeSwitch.setOn(true, animated: true)
-//        self.view.addSubview(modeSwitch)
-        //modeSwitch.addTarget(self, action: #selector(handleModeChange(mode: modeSwitch.isOn)), for: .valueChanged)
-        
         let modeSwitch = UISegmentedControl(items: Settings.availableModes)
         modeSwitch.addTarget(self, action: #selector(handleModeChange(sender:)), for: .valueChanged)
         modeSwitch.selectedSegmentIndex = 1
