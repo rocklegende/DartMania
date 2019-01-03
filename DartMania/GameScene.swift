@@ -146,6 +146,10 @@ class GameScene: SKScene {
         swipeEndPoint = nil
     }
     
+    func resetThrowsLeft() {
+        self.throwsLeft = 3
+    }
+    
     func addPointsLeftLabel(text: String) {
         let label = UILabel()
         label.text = text
@@ -180,7 +184,7 @@ class GameScene: SKScene {
         }
         pointsLeftLabels[currentPlayer].textColor = .white
         
-        throwsLeft = 3
+        resetThrowsLeft()
         pointsMadeInCurrentThrow = 0
     }
     

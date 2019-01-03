@@ -77,7 +77,8 @@ class GameSettingsViewController: UIViewController {
         let startLocalGameButton = UIButton(type: .system)
         startLocalGameButton.setTitle("Start local game", for: .normal)
         startLocalGameButton.addTarget(self, action: #selector(startLocalGame), for: .touchUpInside)
-        startLocalGameButton.backgroundColor = .white
+        startLocalGameButton.backgroundColor = .blue
+        startLocalGameButton.tintColor = .white
         self.view.addSubview(startLocalGameButton)
         
         startLocalGameButton.translatesAutoresizingMaskIntoConstraints = false

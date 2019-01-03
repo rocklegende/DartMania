@@ -13,6 +13,8 @@ class DashboardViewController: UIViewController, UINavigationControllerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "DartMania"
+        
         self.view.backgroundColor = .white
 
         let startGameButton = UIButton(type: .system)
