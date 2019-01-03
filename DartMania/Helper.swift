@@ -20,13 +20,6 @@ class Helper {
         return value
     }
     
-    static func vectorToAngle(directionVector: CGVector, maxVector: CGFloat, minVector: CGFloat, maxAngle: CGFloat, minAngle: CGFloat) {
-        
-    }
-    static func angleToVector(angle: CGFloat, maxVector: CGFloat, minVector: CGFloat, maxAngle: CGFloat, minAngle: CGFloat) {
-        
-    }
-    
     static func getDirectionVector(angles: TossingAngles) -> CGVector {
         
         //TODO: calculate dx
@@ -34,5 +27,23 @@ class Helper {
         let dy = UIScreen.main.bounds.size.height * angles.yAngle / Settings.Y_MAX_ANGLE
         
         return CGVector(dx: dx, dy: dy)
+    }
+    
+    static func getAngles(directionVector: CGVector) -> TossingAngles {
+        
+        let yMaxPixelDirection = UIScreen.main.bounds.size.height
+        let yAngle = Settings.Y_MAX_ANGLE * (directionVector.dy / yMaxPixelDirection)
+        
+        var xMaxPixelDirection = UIScreen.main.bounds.size.width
+        var xAngle = CGFloat(0.0)
+        if (directionVector.dx < 0) {
+            xMaxPixelDirection = -xMaxPixelDirection
+            xAngle = Settings.X_MIN_ANGLE * (directionVector.dx / xMaxPixelDirection)
+        } else {
+            xAngle = Settings.X_MAX_ANGLE * (directionVector.dx / xMaxPixelDirection)
+        }
+        
+        return TossingAngles(xAngle: xAngle, yAngle: yAngle)
+        
     }
 }

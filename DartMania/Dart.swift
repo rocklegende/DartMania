@@ -22,8 +22,6 @@ class Dart {
     
     
     func toss(angles: TossingAngles) {
-        //
-        
         let directionVector = Helper.getDirectionVector(angles: angles)
         
         node.physicsBody?.affectedByGravity = true

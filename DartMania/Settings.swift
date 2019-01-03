@@ -10,6 +10,10 @@ import UIKit
 
 class Settings {
     
+    // GAMEPLAY //
+    static let availableModes: [String] = ["301", "501", "701"]
+    static let availablePlayerCounts: [String] = ["1", "2", "3", "4"]
+    
     // DARTBOARD RADIUSESS //
     static let outerRing: CGFloat = 220.0/220.0
     static let outerLabels: CGFloat = 190.0/220.0
@@ -29,8 +33,9 @@ class Settings {
     // FONT //
     static let pointLabelFontSize: CGFloat = 40
     
-    // DEFAULTS //
+    // DEFAULTS SIZES//
     static let defaultCenter: CGPoint = CGPoint(x: 0, y: UIScreen.main.bounds.height * 0.4)
+    static let defaultDartBoardRadius: CGFloat = UIScreen.main.bounds.width
     
     // POINTS //
     static let pointsArray: [Int] = [13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6]

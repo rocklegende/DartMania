@@ -9,45 +9,52 @@
 import SpriteKit
 import GameplayKit
 
-struct TossingAngles {
-    var xAngle: CGFloat
-    var yAngle: CGFloat
-}
-
 class GameScene: SKScene {
-    // private var dart: DartNode?
+    var settings: DartGameSettings!
+    var throwsLeft: Int = 3
+    var pointsMadeInCurrentThrow: Int = 0
+    var currentPlayer: Int = 0
+    
     private var dart: Dart!
     private var dartboard: Dartboard!
     private var label: SKLabelNode!
+    
+    private var pointsLeft: [Int] = []
+    private var pointsLeftLabels: [UILabel] = []
     
     private var swipeStartPoint: CGPoint?
     private var swipeEndPoint: CGPoint?
     
     override func didMove(to view: SKView) {
         
+        // SET SETTINGS//
+        
+        if let gameSettings = self.userData?.value(forKey: "gameSettings") as? DartGameSettings {
+            settings = gameSettings
+            let numberOfPlayers = settings!.getPlayerCount()
+            for _ in 0..<numberOfPlayers {
+                addPointsLeftForNewPlayer()
+                addPointsLeftLabel(text: String(settings!.getMode()))
+            }
+            pointsLeftLabels.first?.textColor = .white
+        }
+
         self.isUserInteractionEnabled = true
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -20.0)
         
-        self.dartboard = Dartboard(gameScene: self, center: Settings.defaultCenter, radius: 320)
+        // ADD DARTBOARD //
+        self.dartboard = Dartboard(gameScene: self, center: Settings.defaultCenter, radius: Settings.defaultDartBoardRadius)
         // maybe better: for every dartboardelement in dartboard.elements: addChild(element)
         
+        // ADD DART //
         self.dart = Dart()
         self.addChild(dart.node!)
         
+        // ADD HIT POINTS LABEL //
         self.label = SKLabelNode(text: "Points: ")
         self.label.fontSize = 60
         self.label.position = CGPoint(x: 0, y: -400)
         self.addChild(self.label)
-        
-        
-        
-//        self.dart = DartNode(circleOfRadius: 100)
-//        self.addChild(self.dart!)
-        
-//        self.dartboard = Dartboard()
-//        self.addChild(self.dartboard!)
-        
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -77,21 +84,33 @@ class GameScene: SKScene {
                     dy: (swipeEndPoint?.y)! - (swipeStartPoint?.y)!
                 )
                 
-                let angles = getAngles(directionVector: directionVector)
+                let angles = Helper.getAngles(directionVector: directionVector)
                 
+                
+                // TODO: inform about closures in swift an then have something like this
+                // dart.toss(angles: angles).then(evaluateThrow)
                 dart.toss(angles: angles)
+                
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
                     let dartTouchPoint = CGPoint(x: self.dart.node.frame.minX, y: self.dart.node.frame.minY)
-                    self.label.text = "Points: \(self.dartboard.getHitPoints(point: dartTouchPoint))"
+                    
+                    let hitPoints = self.dartboard.getHitPoints(point: dartTouchPoint)
+                    self.label.text = "\(hitPoints)"
+                    
+                    self.updatePoints(player: self.currentPlayer, hitPoints: hitPoints)
+                    
+                    self.throwsLeft -= 1
+                    if (self.throwsLeft == 0) {
+                        self.switchToNextPlayer()
+                    }
                 })
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
                     self.dart.node.position = CGPoint(x: 0, y: -200)
                 })
                 
-                swipeStartPoint = nil
-                swipeEndPoint = nil
-                
+                resetSwipePoints()
             } else {
                 print("error getting touch position of releasing touch of the dragevent")
             }
@@ -108,21 +127,66 @@ class GameScene: SKScene {
         // Called before each frame is rendered
     }
     
-    func getAngles(directionVector: CGVector) -> TossingAngles {
-        
-        let yMaxPixelDirection = UIScreen.main.bounds.size.height
-        let yAngle = Settings.Y_MAX_ANGLE * (directionVector.dy / yMaxPixelDirection)
-        
-        var xMaxPixelDirection = UIScreen.main.bounds.size.width
-        var xAngle = CGFloat(0.0)
-        if (directionVector.dx < 0) {
-            xMaxPixelDirection = -xMaxPixelDirection
-            xAngle = Settings.X_MIN_ANGLE * (directionVector.dx / xMaxPixelDirection)
+    func updatePoints (player: Int, hitPoints: Int) {
+        if (pointsMadeInCurrentThrow + hitPoints < pointsLeft[player]) {
+            pointsMadeInCurrentThrow += hitPoints
+            pointsLeft[player] -= hitPoints
+            pointsLeftLabels[player].text = "\(pointsLeft[player])"
+        } else if (pointsMadeInCurrentThrow + hitPoints == pointsLeft[player]) {
+            // TODO: check if double
+            pointsLeft[player] -= hitPoints
+            print("Player \(player + 1) won!")
         } else {
-            xAngle = Settings.X_MAX_ANGLE * (directionVector.dx / xMaxPixelDirection)
+            switchToNextPlayer()
         }
-        
-        return TossingAngles(xAngle: xAngle, yAngle: yAngle)
-        
     }
+    
+    func resetSwipePoints() {
+        swipeStartPoint = nil
+        swipeEndPoint = nil
+    }
+    
+    func resetThrowsLeft() {
+        self.throwsLeft = 3
+    }
+    
+    func addPointsLeftLabel(text: String) {
+        let label = UILabel()
+        label.text = text
+        label.textColor = .red
+        self.view!.addSubview(label)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        if (pointsLeftLabels.count == 0) {
+            label.centerYAnchor.constraint(equalTo: (self.view?.centerYAnchor)!).isActive = true
+        } else {
+            label.topAnchor.constraint(equalTo: (pointsLeftLabels.last?.bottomAnchor)!).isActive = true
+        }
+        label.leftAnchor.constraint(equalTo: self.view!.leftAnchor).isActive = true
+        label.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        
+        pointsLeftLabels.append(label)
+    }
+    
+    func addPointsLeftForNewPlayer() {
+        pointsLeft.append(settings!.getMode())
+    }
+    
+    func switchToNextPlayer() {
+        
+        pointsLeftLabels[currentPlayer].textColor = .red
+        
+        currentPlayer += 1
+        if currentPlayer == settings.getPlayerCount() {
+            currentPlayer = 0
+        }
+        pointsLeftLabels[currentPlayer].textColor = .white
+        
+        resetThrowsLeft()
+        pointsMadeInCurrentThrow = 0
+    }
+    
+    
 }
