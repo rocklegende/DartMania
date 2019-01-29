@@ -16,6 +16,7 @@ class DartManiaTests: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         gameScene = GameScene()
+        gameScene.settings = DartGameSettings()
         
         
     }
@@ -43,6 +44,14 @@ class DartManiaTests: XCTestCase {
         let dv = CGVector(dx: 0, dy: 0)
         XCTAssert(Helper.getAngles(directionVector: dv).xAngle == TossingAngles(xAngle: 0, yAngle: 0).xAngle)
         XCTAssert(Helper.getAngles(directionVector: dv).yAngle == TossingAngles(xAngle: 0, yAngle: 0).yAngle)
+    }
+    
+    func testSwitchPlayer() {
+        gameScene.currentPlayer = 0
+        for _ in 1...10 {
+            gameScene.increaseCurrentPlayer()
+            XCTAssert(gameScene.currentPlayer < gameScene.settings.getPlayerCount())
+        }
     }
 
     func testPerformanceExample() {

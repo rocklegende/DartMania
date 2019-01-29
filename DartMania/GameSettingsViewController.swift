@@ -15,6 +15,7 @@ class GameSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Settings.dartBoardWhite
+        view.accessibilityIdentifier = "gameSettingsView"
         
         let modeSwitch = UISegmentedControl(items: Settings.availableModes)
         modeSwitch.addTarget(self, action: #selector(handleModeChange(sender:)), for: .valueChanged)
@@ -88,15 +89,10 @@ class GameSettingsViewController: UIViewController {
         startLocalGameButton.heightAnchor.constraint(equalTo: modeSwitch.heightAnchor).isActive = true
         
         
-        
-        // 1 - 4 player
-        // 301 or 501?
         // needs double field for finish?
         // Select Colors for darts
         // Select time to throw?
         
-        // Start localgame
-        // pass settings object to GameViewController
 
         // Do any additional setup after loading the view.
     }

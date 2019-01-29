@@ -177,15 +177,22 @@ class GameScene: SKScene {
     func switchToNextPlayer() {
         
         pointsLeftLabels[currentPlayer].textColor = .red
+        increaseCurrentPlayer()
+        pointsLeftLabels[currentPlayer].textColor = .white
         
+        resetThrowsLeft()
+        resetPointsMadeInCurrentThrow()
+    }
+    
+    func resetPointsMadeInCurrentThrow() {
+        pointsMadeInCurrentThrow = 0
+    }
+    
+    func increaseCurrentPlayer() {
         currentPlayer += 1
         if currentPlayer == settings.getPlayerCount() {
             currentPlayer = 0
         }
-        pointsLeftLabels[currentPlayer].textColor = .white
-        
-        resetThrowsLeft()
-        pointsMadeInCurrentThrow = 0
     }
     
     

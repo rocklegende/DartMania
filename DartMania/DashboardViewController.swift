@@ -16,6 +16,7 @@ class DashboardViewController: UIViewController, UINavigationControllerDelegate 
         self.title = "DartMania"
         
         self.view.backgroundColor = .white
+        view.accessibilityIdentifier = "dashboardView"
 
         let startGameButton = UIButton(type: .system)
         startGameButton.setTitle("Start a game!", for: .normal)
