@@ -54,36 +54,20 @@ class GameScene: SKScene {
         } else {
             print("error getting first touch position of dragevent")
         }
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         if (swipeStartPoint != nil) {
             if let touchPoint = touches.first?.location(in: self) {
                 swipeEndPoint = touchPoint
-                let directionVector = CGVector(
-                    dx: (swipeEndPoint?.x)! - (swipeStartPoint?.x)!,
-                    dy: (swipeEndPoint?.y)! - (swipeStartPoint?.y)!
-                )
-                
-                let angles = Helper.getAngles(directionVector: directionVector)
-                dart.toss(angles: angles) { (successfulThrow) in
-                    if (successfulThrow) {
-                        self.evaluateThrow()
-                        //self.resetPositionOfDart()
-                        self.resetSwipePoints()
-                    }
-                }
+                performDartThrow()
             } else {
                 print("error getting touch position of releasing touch of the dragevent")
             }
         }
-        
-        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -95,17 +79,29 @@ class GameScene: SKScene {
     }
     
     func performDartThrow() {
-        
+        let directionVector = CGVector(
+            dx: (swipeEndPoint?.x)! - (swipeStartPoint?.x)!,
+            dy: (swipeEndPoint?.y)! - (swipeStartPoint?.y)!
+        )
+        let angles = Helper.getAngles(directionVector: directionVector)
+        dart.toss(angles: angles) { (successfulThrow) in
+            if (successfulThrow) {
+                self.handleCompletedThrow()
+            }
+        }
+    }
+    
+    func handleCompletedThrow() {
+        self.evaluateThrow()
+        //self.resetPositionOfDart()
+        self.resetSwipePoints()
     }
     
     func evaluateThrow() {
         let dartTouchPoint = CGPoint(x: dart.node.frame.minX, y: dart.node.frame.minY)
-        
         let hitPoints = dartboard.getHitPoints(point: dartTouchPoint)
         label.text = "\(hitPoints)"
-        
         updatePoints(player: currentPlayer, hitPoints: hitPoints)
-        
         throwsLeft -= 1
         if (throwsLeft == 0) {
             switchToNextPlayer()
@@ -113,7 +109,6 @@ class GameScene: SKScene {
     }
     
     func setSettings() {
-        // SET SETTINGS//
         if let gameSettings = self.userData?.value(forKey: "gameSettings") as? DartGameSettings {
             settings = gameSettings
             let numberOfPlayers = settings!.getPlayerCount()
