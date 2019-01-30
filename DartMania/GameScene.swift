@@ -71,32 +71,13 @@ class GameScene: SKScene {
                 )
                 
                 let angles = Helper.getAngles(directionVector: directionVector)
-                
-                
-                // TODO: inform about closures in swift an then have something like this
-                // dart.toss(angles: angles).then(evaluateThrow)
-                dart.toss(angles: angles)
-                
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
-                    let dartTouchPoint = CGPoint(x: self.dart.node.frame.minX, y: self.dart.node.frame.minY)
-                    
-                    let hitPoints = self.dartboard.getHitPoints(point: dartTouchPoint)
-                    self.label.text = "\(hitPoints)"
-                    
-                    self.updatePoints(player: self.currentPlayer, hitPoints: hitPoints)
-                    
-                    self.throwsLeft -= 1
-                    if (self.throwsLeft == 0) {
-                        self.switchToNextPlayer()
+                dart.toss(angles: angles) { (successfulThrow) in
+                    if (successfulThrow) {
+                        self.evaluateThrow()
+                        //self.resetPositionOfDart()
+                        self.resetSwipePoints()
                     }
-                })
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                    self.dart.node.position = CGPoint(x: 0, y: -200)
-                })
-                
-                resetSwipePoints()
+                }
             } else {
                 print("error getting touch position of releasing touch of the dragevent")
             }
@@ -111,6 +92,24 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    func performDartThrow() {
+        
+    }
+    
+    func evaluateThrow() {
+        let dartTouchPoint = CGPoint(x: dart.node.frame.minX, y: dart.node.frame.minY)
+        
+        let hitPoints = dartboard.getHitPoints(point: dartTouchPoint)
+        label.text = "\(hitPoints)"
+        
+        updatePoints(player: currentPlayer, hitPoints: hitPoints)
+        
+        throwsLeft -= 1
+        if (throwsLeft == 0) {
+            switchToNextPlayer()
+        }
     }
     
     func setSettings() {

@@ -21,7 +21,7 @@ class Dart {
     
     
     
-    func toss(angles: TossingAngles) {
+    func toss(angles: TossingAngles, completion: @escaping (Bool) -> ()) {
         let directionVector = Helper.getDirectionVector(angles: angles)
         
         node.physicsBody?.affectedByGravity = true
@@ -36,6 +36,7 @@ class Dart {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
             self.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             self.node.physicsBody?.affectedByGravity = false
+            completion(true)
         })
     }
     
