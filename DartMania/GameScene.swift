@@ -14,37 +14,23 @@ class GameScene: SKScene {
     var throwsLeft: Int = 3
     var pointsMadeInCurrentThrow: Int = 0
     var currentPlayer: Int = 0
-    
     private var dart: Dart!
     private var dartboard: Dartboard!
     private var label: SKLabelNode!
-    
     private var pointsLeft: [Int] = []
     private var pointsLeftLabels: [UILabel] = []
-    
     private var swipeStartPoint: CGPoint?
     private var swipeEndPoint: CGPoint?
     
     override func didMove(to view: SKView) {
-        
-        // SET SETTINGS//
-        
-        if let gameSettings = self.userData?.value(forKey: "gameSettings") as? DartGameSettings {
-            settings = gameSettings
-            let numberOfPlayers = settings!.getPlayerCount()
-            for _ in 0..<numberOfPlayers {
-                addPointsLeftForNewPlayer()
-                addPointsLeftLabel(text: String(settings!.getMode()))
-            }
-            pointsLeftLabels.first?.textColor = .white
-        }
-
+        setSettings()
+        self.scaleMode = .aspectFit
         self.isUserInteractionEnabled = true
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -20.0)
         
         // ADD DARTBOARD //
-        self.dartboard = Dartboard(gameScene: self, center: Settings.defaultCenter, radius: Settings.defaultDartBoardRadius)
-        // maybe better: for every dartboardelement in dartboard.elements: addChild(element)
+        self.dartboard = Dartboard(center: Settings.defaultCenter, radius: Settings.defaultDartBoardRadius)
+        self.addChild(dartboard.node)
         
         // ADD DART //
         self.dart = Dart()
@@ -125,6 +111,19 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    func setSettings() {
+        // SET SETTINGS//
+        if let gameSettings = self.userData?.value(forKey: "gameSettings") as? DartGameSettings {
+            settings = gameSettings
+            let numberOfPlayers = settings!.getPlayerCount()
+            for _ in 0..<numberOfPlayers {
+                addPointsLeftForNewPlayer()
+                addPointsLeftLabel(text: String(settings!.getMode()))
+            }
+            pointsLeftLabels.first?.textColor = .white
+        }
     }
     
     func updatePoints (player: Int, hitPoints: Int) {
