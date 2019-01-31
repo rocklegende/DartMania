@@ -10,10 +10,10 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    private var settings: DartGameSettings!
+    var settings: DartGameSettings!
     var throwsLeft: Int = 3
-    private var pointsMadeInCurrentThrow: Int = 0
-    private var currentPlayer: Int = 0
+    var pointsMadeInCurrentThrow: Int = 0
+    var currentPlayer: Int = 0
     private var dart: Dart!
     private var dartboard: Dartboard!
     private var label: SKLabelNode!
@@ -181,14 +181,21 @@ class GameScene: SKScene {
     
     func switchToNextPlayer() {
         pointsLeftLabels[currentPlayer].textColor = .red
+        increaseCurrentPlayer()
+        pointsLeftLabels[currentPlayer].textColor = .white
         
+        resetThrowsLeft()
+        resetPointsMadeInCurrentThrow()
+    }
+    
+    func resetPointsMadeInCurrentThrow() {
+        pointsMadeInCurrentThrow = 0
+    }
+    
+    func increaseCurrentPlayer() {
         currentPlayer += 1
         if currentPlayer == settings.getPlayerCount() {
             currentPlayer = 0
         }
-        pointsLeftLabels[currentPlayer].textColor = .white
-        
-        resetThrowsLeft()
-        pointsMadeInCurrentThrow = 0
     }
 }

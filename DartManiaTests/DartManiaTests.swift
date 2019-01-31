@@ -19,6 +19,7 @@ class DartManiaTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         gameScene = GameScene()
         dartboard = Dartboard(center: CGPoint(x: 0, y: 200), radius: 100)
+        gameScene.settings = DartGameSettings()
         
     }
 
@@ -55,6 +56,14 @@ class DartManiaTests: XCTestCase {
             }
         }
         XCTAssertTrue(count == 20)
+    }
+    
+    func testSwitchPlayer() {
+        gameScene.currentPlayer = 0
+        for _ in 1...10 {
+            gameScene.increaseCurrentPlayer()
+            XCTAssert(gameScene.currentPlayer < gameScene.settings.getPlayerCount())
+        }
     }
 
     func testPerformanceExample() {
