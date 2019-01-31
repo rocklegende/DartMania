@@ -39,6 +39,11 @@ class DartManiaDartboardTests: XCTestCase {
         XCTAssertTrue(count == 20)
     }
     
+    func testDartboardHas280Parts() {
+        // 20 fields a 14 elements
+        XCTAssertTrue(dartboard.node.children.count == 280)
+    }
+    
     func testWidthOfDartboardIs80Percent() {
         
     }
