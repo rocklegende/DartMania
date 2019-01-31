@@ -23,13 +23,14 @@ class GameScene: SKScene {
     private var swipeEndPoint: CGPoint?
     
     override func didMove(to view: SKView) {
-        self.scaleMode = .aspectFit
-        self.isUserInteractionEnabled = true
-        
+        configureScene()
         setDartGameSettings()
         setGravity(gravity: -20.0)
         
         addDartboard()
+        print(UIScreen.main.bounds.width)
+        print(dartboard.node.calculateAccumulatedFrame().size)
+        print(UIScreen.main.bounds.width / dartboard.node.calculateAccumulatedFrame().width)
         addDart()
         addHitPointsUILabel()
     }
@@ -67,6 +68,11 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    func configureScene() {
+        self.scaleMode = .aspectFit
+        self.isUserInteractionEnabled = true
     }
     
     func setGravity(gravity: CGFloat) {

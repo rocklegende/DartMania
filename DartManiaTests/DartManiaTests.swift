@@ -48,15 +48,7 @@ class DartManiaTests: XCTestCase {
         XCTAssert(Helper.getAngles(directionVector: dv).yAngle == TossingAngles(xAngle: 0, yAngle: 0).yAngle)
     }
     
-    func testDartboardHas20FieldLabels() {
-        var count = 0
-        for element in dartboard.node.children {
-            if let _ = element as? SKLabelNode {
-                count += 1
-            }
-        }
-        XCTAssertTrue(count == 20)
-    }
+    
     
     func testSwitchPlayer() {
         gameScene.currentPlayer = 0

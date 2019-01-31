@@ -89,6 +89,10 @@ class Dartboard {
         node.addChild(label)
     }
     
+    func width() {
+        
+    }
+    
     
     func createDartboardElements () {
         for i in 0..<Settings.pointsArray.count {
