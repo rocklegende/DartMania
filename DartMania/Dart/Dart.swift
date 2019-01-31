@@ -19,27 +19,19 @@ class Dart {
         node.physicsBody?.mass = 0.02 // 20 Gramm
     }
     
-    
-    
     func toss(angles: TossingAngles, completion: @escaping (Bool) -> ()) {
         let directionVector = Helper.getDirectionVector(angles: angles)
-        
         node.physicsBody?.affectedByGravity = true
         node.physicsBody?.applyImpulse(
             CGVector(
                 dx: 0.1 * directionVector.dx,
-                // dy: 0.1 * Helper.cap(value: directionVector.dy, max: maxThrowingAngleVector, min: minThrowingAngleVector)
                 dy: 0.1 * directionVector.dy
             )
         )
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
             self.node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             self.node.physicsBody?.affectedByGravity = false
             completion(true)
         })
     }
-    
-    
-
 }

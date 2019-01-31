@@ -15,7 +15,6 @@ class DartGameSettings {
     private var needsDoubleFieldForFinish: Bool = true
     
     init() {
-        
     }
     
     func setMode(points: Int) {

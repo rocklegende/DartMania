@@ -21,7 +21,6 @@
 		40207F65214ED735002E71B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40207F63214ED735002E71B4 /* Main.storyboard */; };
 		40207F67214ED735002E71B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40207F66214ED735002E71B4 /* Assets.xcassets */; };
 		40207F6A214ED735002E71B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40207F68214ED735002E71B4 /* LaunchScreen.storyboard */; };
-		40207F74214EDF21002E71B4 /* DartNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40207F73214EDF21002E71B4 /* DartNode.swift */; };
 		40207F76215B5FA5002E71B4 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40207F75215B5FA5002E71B4 /* Helper.swift */; };
 		4062927721C585E6004AC627 /* Dart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062927621C585E6004AC627 /* Dart.swift */; };
 		4062927921C5908D004AC627 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062927821C5908D004AC627 /* Settings.swift */; };
@@ -57,7 +56,6 @@
 		40207F66214ED735002E71B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40207F69214ED735002E71B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		40207F6B214ED735002E71B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		40207F73214EDF21002E71B4 /* DartNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DartNode.swift; path = ../DartNode.swift; sourceTree = "<group>"; };
 		40207F75215B5FA5002E71B4 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		4062927621C585E6004AC627 /* Dart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dart.swift; sourceTree = "<group>"; };
 		4062927821C5908D004AC627 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -112,20 +110,13 @@
 		40207F58214ED734002E71B4 /* DartMania */ = {
 			isa = PBXGroup;
 			children = (
+				40644DEF22020ED700EC9245 /* Dart */,
+				40644DEE22020EB500EC9245 /* Dartboard */,
+				40644DED22020E7200EC9245 /* Helper */,
+				40644DEC22020E5A00EC9245 /* Scenes */,
+				40644DEB22020E0B00EC9245 /* Settings */,
+				40644DEA22020DBA00EC9245 /* ViewController */,
 				40207F59214ED734002E71B4 /* AppDelegate.swift */,
-				40207F75215B5FA5002E71B4 /* Helper.swift */,
-				401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */,
-				401B5ADF21D913E600B9349B /* DashboardViewController.swift */,
-				40184153217CC17C0073477A /* Dartboard.swift */,
-				40184155217CC6490073477A /* DartboardElement.swift */,
-				40207F73214EDF21002E71B4 /* DartNode.swift */,
-				401406CE21D438D3006D7F6F /* DartGameSettings.swift */,
-				40207F5B214ED734002E71B4 /* GameScene.sks */,
-				4062927621C585E6004AC627 /* Dart.swift */,
-				401B5ADB21D90DAF00B9349B /* TossingAngles.swift */,
-				40207F5F214ED735002E71B4 /* GameScene.swift */,
-				4062927821C5908D004AC627 /* Settings.swift */,
-				40207F61214ED735002E71B4 /* GameViewController.swift */,
 				40207F63214ED735002E71B4 /* Main.storyboard */,
 				4062927C21C5A7D1004AC627 /* dartarrow.png */,
 				40207F66214ED735002E71B4 /* Assets.xcassets */,
@@ -133,6 +124,60 @@
 				40207F6B214ED735002E71B4 /* Info.plist */,
 			);
 			path = DartMania;
+			sourceTree = "<group>";
+		};
+		40644DEA22020DBA00EC9245 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				40207F61214ED735002E71B4 /* GameViewController.swift */,
+				401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */,
+				401B5ADF21D913E600B9349B /* DashboardViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		40644DEB22020E0B00EC9245 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				401406CE21D438D3006D7F6F /* DartGameSettings.swift */,
+				4062927821C5908D004AC627 /* Settings.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		40644DEC22020E5A00EC9245 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				40207F5F214ED735002E71B4 /* GameScene.swift */,
+				40207F5B214ED734002E71B4 /* GameScene.sks */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		40644DED22020E7200EC9245 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				401B5ADB21D90DAF00B9349B /* TossingAngles.swift */,
+				40207F75215B5FA5002E71B4 /* Helper.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		40644DEE22020EB500EC9245 /* Dartboard */ = {
+			isa = PBXGroup;
+			children = (
+				40184155217CC6490073477A /* DartboardElement.swift */,
+				40184153217CC17C0073477A /* Dartboard.swift */,
+			);
+			path = Dartboard;
+			sourceTree = "<group>";
+		};
+		40644DEF22020ED700EC9245 /* Dart */ = {
+			isa = PBXGroup;
+			children = (
+				4062927621C585E6004AC627 /* Dart.swift */,
+			);
+			path = Dart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +304,6 @@
 				401406CD21D3E15C006D7F6F /* GameSettingsViewController.swift in Sources */,
 				4062927921C5908D004AC627 /* Settings.swift in Sources */,
 				401B5ADC21D90DAF00B9349B /* TossingAngles.swift in Sources */,
-				40207F74214EDF21002E71B4 /* DartNode.swift in Sources */,
 				40207F5A214ED734002E71B4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

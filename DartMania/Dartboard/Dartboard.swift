@@ -85,7 +85,7 @@ class Dartboard {
         let label = SKLabelNode(text: "\(points)")
         label.position = position
         label.fontName = "AppleSDGothicNeo-Bold"
-        label.fontSize = Settings.pointLabelFontSize 
+        label.fontSize = Settings.pointLabelFontSize
         node.addChild(label)
     }
     

@@ -10,10 +10,10 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    var settings: DartGameSettings!
+    private var settings: DartGameSettings!
     var throwsLeft: Int = 3
-    var pointsMadeInCurrentThrow: Int = 0
-    var currentPlayer: Int = 0
+    private var pointsMadeInCurrentThrow: Int = 0
+    private var currentPlayer: Int = 0
     private var dart: Dart!
     private var dartboard: Dartboard!
     private var label: SKLabelNode!
@@ -23,24 +23,15 @@ class GameScene: SKScene {
     private var swipeEndPoint: CGPoint?
     
     override func didMove(to view: SKView) {
-        setSettings()
         self.scaleMode = .aspectFit
         self.isUserInteractionEnabled = true
-        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -20.0)
         
-        // ADD DARTBOARD //
-        self.dartboard = Dartboard(center: Settings.defaultCenter, radius: Settings.defaultDartBoardRadius)
-        self.addChild(dartboard.node)
+        setDartGameSettings()
+        setGravity(gravity: -20.0)
         
-        // ADD DART //
-        self.dart = Dart()
-        self.addChild(dart.node!)
-        
-        // ADD HIT POINTS LABEL //
-        self.label = SKLabelNode(text: "Points: ")
-        self.label.fontSize = 60
-        self.label.position = CGPoint(x: 0, y: -400)
-        self.addChild(self.label)
+        addDartboard()
+        addDart()
+        addHitPointsUILabel()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -78,6 +69,27 @@ class GameScene: SKScene {
         // Called before each frame is rendered
     }
     
+    func setGravity(gravity: CGFloat) {
+        physicsWorld.gravity = CGVector(dx: 0.0, dy: gravity)
+    }
+    
+    func addHitPointsUILabel() {
+        self.label = SKLabelNode(text: "Points: ")
+        self.label.fontSize = 60
+        self.label.position = CGPoint(x: 0, y: -400)
+        self.addChild(self.label)
+    }
+    
+    func addDart() {
+        self.dart = Dart()
+        self.addChild(dart.node!)
+    }
+    
+    func addDartboard() {
+        self.dartboard = Dartboard(center: Settings.defaultCenter, radius: Settings.defaultDartBoardRadius)
+        self.addChild(dartboard.node)
+    }
+    
     func performDartThrow() {
         let directionVector = CGVector(
             dx: (swipeEndPoint?.x)! - (swipeStartPoint?.x)!,
@@ -108,7 +120,7 @@ class GameScene: SKScene {
         }
     }
     
-    func setSettings() {
+    func setDartGameSettings() {
         if let gameSettings = self.userData?.value(forKey: "gameSettings") as? DartGameSettings {
             settings = gameSettings
             let numberOfPlayers = settings!.getPlayerCount()
@@ -168,7 +180,6 @@ class GameScene: SKScene {
     }
     
     func switchToNextPlayer() {
-        
         pointsLeftLabels[currentPlayer].textColor = .red
         
         currentPlayer += 1
@@ -180,6 +191,4 @@ class GameScene: SKScene {
         resetThrowsLeft()
         pointsMadeInCurrentThrow = 0
     }
-    
-    
 }
