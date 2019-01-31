@@ -15,6 +15,21 @@ class Dartboard {
     var elements: [DartboardElement]
     var center: CGPoint
     var radius: CGFloat
+    var singleFieldComponents = [
+        ["pointsMultiplier": 0, "radius": Settings.outerRing, "color": Settings.dartBoardBlack],
+        ["pointsMultiplier": 0, "radius": Settings.outerDoubleWire, "color": UIColor.black],
+        ["pointsMultiplier": 2, "radius": Settings.doubleRing, "color": UIColor.black],
+        ["pointsMultiplier": 0, "radius": Settings.innerDoubleWire, "color": UIColor.black],
+        ["pointsMultiplier": 1, "radius": Settings.outerSingleRing, "color": UIColor.black],
+        ["pointsMultiplier": 0, "radius": Settings.outerTrippleWire, "color": UIColor.black],
+        ["pointsMultiplier": 3, "radius": Settings.trippleRing, "color": UIColor.black],
+        ["pointsMultiplier": 0, "radius": Settings.innerTrippleWire, "color": UIColor.black],
+        ["pointsMultiplier": 1, "radius": Settings.innerSingleRing, "color": UIColor.black],
+        ["pointsMultiplier": 0, "radius": Settings.halfBullsEyeWire, "color": UIColor.black],
+        ["points": 25, "radius": Settings.halfBullsEye, "color": UIColor.black],
+        ["pointsMultiplier": 0, "radius": Settings.bullsEyeWire, "color": UIColor.black],
+        ["points": 50, "radius": Settings.bullsEye, "color": UIColor.black],
+    ]
     
     init(center: CGPoint, radius: CGFloat) {
         self.node = SKNode()
@@ -47,8 +62,8 @@ class Dartboard {
         let endAngle = CGFloat(offset) + (CGFloat(position + 1) / CGFloat(Settings.pointsArray.count)) * (2 * CGFloat.pi)
         let mid = (startingAngle + endAngle) / 2
         
-        addSingleField(points: 0, radius: self.radius * Settings.outerRing, startAngle: startingAngle, endAngle: endAngle, color: Settings.dartBoardBlack)
         
+        addSingleField(points: 0, radius: self.radius * Settings.outerRing, startAngle: startingAngle, endAngle: endAngle, color: Settings.dartBoardBlack)
         addFieldLabel(
             points: points,
             position: CGPoint(x: cos(mid) * self.radius * Settings.outerLabels, y: sin(mid) * self.radius * Settings.outerLabels + (self.center.y - Settings.pointLabelFontSize / 2.5))
@@ -87,10 +102,6 @@ class Dartboard {
         label.fontName = "AppleSDGothicNeo-Bold"
         label.fontSize = Settings.pointLabelFontSize
         node.addChild(label)
-    }
-    
-    func width() {
-        
     }
     
     
