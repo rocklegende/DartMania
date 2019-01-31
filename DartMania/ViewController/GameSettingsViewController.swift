@@ -20,7 +20,6 @@ class GameSettingsViewController: UIViewController {
         let modeSwitch = UISegmentedControl(items: Settings.availableModes)
         modeSwitch.addTarget(self, action: #selector(handleModeChange(sender:)), for: .valueChanged)
         modeSwitch.selectedSegmentIndex = 1
-        
         modeSwitch.layer.cornerRadius = 5.0
         modeSwitch.backgroundColor = .white
         modeSwitch.tintColor = .blue
@@ -41,12 +40,6 @@ class GameSettingsViewController: UIViewController {
         modeSwitchLabel.bottomAnchor.constraint(equalTo: modeSwitch.topAnchor).isActive = true
         modeSwitchLabel.widthAnchor.constraint(equalToConstant: 150).isActive = true
         modeSwitchLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-        
-        
-        
-        
-        
         
         let playerCountSwitch = UISegmentedControl(items: Settings.availablePlayerCounts)
         playerCountSwitch.addTarget(self, action: #selector(handlePlayerCountChange(sender:)), for: .valueChanged)
@@ -92,7 +85,6 @@ class GameSettingsViewController: UIViewController {
         // needs double field for finish?
         // Select Colors for darts
         // Select time to throw?
-        
 
         // Do any additional setup after loading the view.
     }

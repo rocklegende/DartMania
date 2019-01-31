@@ -7,17 +7,19 @@
 //
 
 import XCTest
+import GameKit
 @testable import DartMania
 
 class DartManiaTests: XCTestCase {
     
     var gameScene: GameScene!
+    var dartboard: Dartboard!
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         gameScene = GameScene()
+        dartboard = Dartboard(center: CGPoint(x: 0, y: 200), radius: 100)
         gameScene.settings = DartGameSettings()
-        
         
     }
 
@@ -44,6 +46,16 @@ class DartManiaTests: XCTestCase {
         let dv = CGVector(dx: 0, dy: 0)
         XCTAssert(Helper.getAngles(directionVector: dv).xAngle == TossingAngles(xAngle: 0, yAngle: 0).xAngle)
         XCTAssert(Helper.getAngles(directionVector: dv).yAngle == TossingAngles(xAngle: 0, yAngle: 0).yAngle)
+    }
+    
+    func testDartboardHas20FieldLabels() {
+        var count = 0
+        for element in dartboard.node.children {
+            if let _ = element as? SKLabelNode {
+                count += 1
+            }
+        }
+        XCTAssertTrue(count == 20)
     }
     
     func testSwitchPlayer() {
