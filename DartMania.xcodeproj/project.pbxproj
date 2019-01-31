@@ -1,0 +1,564 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		401406CD21D3E15C006D7F6F /* GameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */; };
+		401406CF21D438D3006D7F6F /* DartGameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401406CE21D438D3006D7F6F /* DartGameSettings.swift */; };
+		40184154217CC17C0073477A /* Dartboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40184153217CC17C0073477A /* Dartboard.swift */; };
+		40184156217CC6490073477A /* DartboardElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40184155217CC6490073477A /* DartboardElement.swift */; };
+		401B5ADC21D90DAF00B9349B /* TossingAngles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B5ADB21D90DAF00B9349B /* TossingAngles.swift */; };
+		401B5AE021D913E600B9349B /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B5ADF21D913E600B9349B /* DashboardViewController.swift */; };
+		401B5AE821DE34F000B9349B /* DartManiaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B5AE721DE34F000B9349B /* DartManiaTests.swift */; };
+		40207F5A214ED734002E71B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40207F59214ED734002E71B4 /* AppDelegate.swift */; };
+		40207F5C214ED735002E71B4 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 40207F5B214ED734002E71B4 /* GameScene.sks */; };
+		40207F60214ED735002E71B4 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40207F5F214ED735002E71B4 /* GameScene.swift */; };
+		40207F62214ED735002E71B4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40207F61214ED735002E71B4 /* GameViewController.swift */; };
+		40207F65214ED735002E71B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40207F63214ED735002E71B4 /* Main.storyboard */; };
+		40207F67214ED735002E71B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40207F66214ED735002E71B4 /* Assets.xcassets */; };
+		40207F6A214ED735002E71B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40207F68214ED735002E71B4 /* LaunchScreen.storyboard */; };
+		40207F76215B5FA5002E71B4 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40207F75215B5FA5002E71B4 /* Helper.swift */; };
+		4062927721C585E6004AC627 /* Dart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062927621C585E6004AC627 /* Dart.swift */; };
+		4062927921C5908D004AC627 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062927821C5908D004AC627 /* Settings.swift */; };
+		4062927D21C5A7D1004AC627 /* dartarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4062927C21C5A7D1004AC627 /* dartarrow.png */; };
+		40644DF122032DBF00EC9245 /* DartManiaDartboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40644DF022032DBF00EC9245 /* DartManiaDartboardTests.swift */; };
+		40A22D4D21F0C63C00960217 /* DartManiaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A22D4C21F0C63C00960217 /* DartManiaUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		401B5AEA21DE34F000B9349B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 40207F4E214ED734002E71B4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 40207F55214ED734002E71B4;
+			remoteInfo = DartMania;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsViewController.swift; sourceTree = "<group>"; };
+		401406CE21D438D3006D7F6F /* DartGameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartGameSettings.swift; sourceTree = "<group>"; };
+		40184153217CC17C0073477A /* Dartboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dartboard.swift; sourceTree = "<group>"; };
+		40184155217CC6490073477A /* DartboardElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartboardElement.swift; sourceTree = "<group>"; };
+		401B5ADB21D90DAF00B9349B /* TossingAngles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossingAngles.swift; sourceTree = "<group>"; };
+		401B5ADF21D913E600B9349B /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		401B5AE521DE34F000B9349B /* DartManiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DartManiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		401B5AE721DE34F000B9349B /* DartManiaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartManiaTests.swift; sourceTree = "<group>"; };
+		401B5AE921DE34F000B9349B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40207F56214ED734002E71B4 /* DartMania.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DartMania.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		40207F59214ED734002E71B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		40207F5B214ED734002E71B4 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		40207F5F214ED735002E71B4 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		40207F61214ED735002E71B4 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		40207F64214ED735002E71B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		40207F66214ED735002E71B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		40207F69214ED735002E71B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		40207F6B214ED735002E71B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40207F75215B5FA5002E71B4 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		4062927621C585E6004AC627 /* Dart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dart.swift; sourceTree = "<group>"; };
+		4062927821C5908D004AC627 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		4062927C21C5A7D1004AC627 /* dartarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dartarrow.png; sourceTree = "<group>"; };
+		40644DF022032DBF00EC9245 /* DartManiaDartboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartManiaDartboardTests.swift; sourceTree = "<group>"; };
+		40A22D4C21F0C63C00960217 /* DartManiaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartManiaUITests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		401B5AE221DE34F000B9349B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40207F53214ED734002E71B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		401B5AE621DE34F000B9349B /* DartManiaTests */ = {
+			isa = PBXGroup;
+			children = (
+				401B5AE721DE34F000B9349B /* DartManiaTests.swift */,
+				40644DF022032DBF00EC9245 /* DartManiaDartboardTests.swift */,
+				401B5AE921DE34F000B9349B /* Info.plist */,
+				40A22D4C21F0C63C00960217 /* DartManiaUITests.swift */,
+			);
+			path = DartManiaTests;
+			sourceTree = "<group>";
+		};
+		40207F4D214ED734002E71B4 = {
+			isa = PBXGroup;
+			children = (
+				40207F58214ED734002E71B4 /* DartMania */,
+				401B5AE621DE34F000B9349B /* DartManiaTests */,
+				40207F57214ED734002E71B4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		40207F57214ED734002E71B4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				40207F56214ED734002E71B4 /* DartMania.app */,
+				401B5AE521DE34F000B9349B /* DartManiaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		40207F58214ED734002E71B4 /* DartMania */ = {
+			isa = PBXGroup;
+			children = (
+				40644DEF22020ED700EC9245 /* Dart */,
+				40644DEE22020EB500EC9245 /* Dartboard */,
+				40644DED22020E7200EC9245 /* Helper */,
+				40644DEC22020E5A00EC9245 /* Scenes */,
+				40644DEB22020E0B00EC9245 /* Settings */,
+				40644DEA22020DBA00EC9245 /* ViewController */,
+				40207F59214ED734002E71B4 /* AppDelegate.swift */,
+				40207F63214ED735002E71B4 /* Main.storyboard */,
+				4062927C21C5A7D1004AC627 /* dartarrow.png */,
+				40207F66214ED735002E71B4 /* Assets.xcassets */,
+				40207F68214ED735002E71B4 /* LaunchScreen.storyboard */,
+				40207F6B214ED735002E71B4 /* Info.plist */,
+			);
+			path = DartMania;
+			sourceTree = "<group>";
+		};
+		40644DEA22020DBA00EC9245 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				40207F61214ED735002E71B4 /* GameViewController.swift */,
+				401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */,
+				401B5ADF21D913E600B9349B /* DashboardViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		40644DEB22020E0B00EC9245 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				401406CE21D438D3006D7F6F /* DartGameSettings.swift */,
+				4062927821C5908D004AC627 /* Settings.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		40644DEC22020E5A00EC9245 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				40207F5F214ED735002E71B4 /* GameScene.swift */,
+				40207F5B214ED734002E71B4 /* GameScene.sks */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		40644DED22020E7200EC9245 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				401B5ADB21D90DAF00B9349B /* TossingAngles.swift */,
+				40207F75215B5FA5002E71B4 /* Helper.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		40644DEE22020EB500EC9245 /* Dartboard */ = {
+			isa = PBXGroup;
+			children = (
+				40184155217CC6490073477A /* DartboardElement.swift */,
+				40184153217CC17C0073477A /* Dartboard.swift */,
+			);
+			path = Dartboard;
+			sourceTree = "<group>";
+		};
+		40644DEF22020ED700EC9245 /* Dart */ = {
+			isa = PBXGroup;
+			children = (
+				4062927621C585E6004AC627 /* Dart.swift */,
+			);
+			path = Dart;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		401B5AE421DE34F000B9349B /* DartManiaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 401B5AEC21DE34F000B9349B /* Build configuration list for PBXNativeTarget "DartManiaTests" */;
+			buildPhases = (
+				401B5AE121DE34F000B9349B /* Sources */,
+				401B5AE221DE34F000B9349B /* Frameworks */,
+				401B5AE321DE34F000B9349B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				401B5AEB21DE34F000B9349B /* PBXTargetDependency */,
+			);
+			name = DartManiaTests;
+			productName = DartManiaTests;
+			productReference = 401B5AE521DE34F000B9349B /* DartManiaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		40207F55214ED734002E71B4 /* DartMania */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 40207F6E214ED735002E71B4 /* Build configuration list for PBXNativeTarget "DartMania" */;
+			buildPhases = (
+				40207F52214ED734002E71B4 /* Sources */,
+				40207F53214ED734002E71B4 /* Frameworks */,
+				40207F54214ED734002E71B4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DartMania;
+			productName = DartMania;
+			productReference = 40207F56214ED734002E71B4 /* DartMania.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		40207F4E214ED734002E71B4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Tim Hehmann";
+				TargetAttributes = {
+					401B5AE421DE34F000B9349B = {
+						CreatedOnToolsVersion = 10.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 40207F55214ED734002E71B4;
+					};
+					40207F55214ED734002E71B4 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 40207F51214ED734002E71B4 /* Build configuration list for PBXProject "DartMania" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 40207F4D214ED734002E71B4;
+			productRefGroup = 40207F57214ED734002E71B4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				40207F55214ED734002E71B4 /* DartMania */,
+				401B5AE421DE34F000B9349B /* DartManiaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		401B5AE321DE34F000B9349B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40207F54214ED734002E71B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4062927D21C5A7D1004AC627 /* dartarrow.png in Resources */,
+				40207F65214ED735002E71B4 /* Main.storyboard in Resources */,
+				40207F5C214ED735002E71B4 /* GameScene.sks in Resources */,
+				40207F67214ED735002E71B4 /* Assets.xcassets in Resources */,
+				40207F6A214ED735002E71B4 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		401B5AE121DE34F000B9349B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40644DF122032DBF00EC9245 /* DartManiaDartboardTests.swift in Sources */,
+				401B5AE821DE34F000B9349B /* DartManiaTests.swift in Sources */,
+				40A22D4D21F0C63C00960217 /* DartManiaUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40207F52214ED734002E71B4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4062927721C585E6004AC627 /* Dart.swift in Sources */,
+				40207F60214ED735002E71B4 /* GameScene.swift in Sources */,
+				40207F62214ED735002E71B4 /* GameViewController.swift in Sources */,
+				401406CF21D438D3006D7F6F /* DartGameSettings.swift in Sources */,
+				40184156217CC6490073477A /* DartboardElement.swift in Sources */,
+				40207F76215B5FA5002E71B4 /* Helper.swift in Sources */,
+				40184154217CC17C0073477A /* Dartboard.swift in Sources */,
+				401B5AE021D913E600B9349B /* DashboardViewController.swift in Sources */,
+				401406CD21D3E15C006D7F6F /* GameSettingsViewController.swift in Sources */,
+				4062927921C5908D004AC627 /* Settings.swift in Sources */,
+				401B5ADC21D90DAF00B9349B /* TossingAngles.swift in Sources */,
+				40207F5A214ED734002E71B4 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		401B5AEB21DE34F000B9349B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 40207F55214ED734002E71B4 /* DartMania */;
+			targetProxy = 401B5AEA21DE34F000B9349B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		40207F63214ED735002E71B4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40207F64214ED735002E71B4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		40207F68214ED735002E71B4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40207F69214ED735002E71B4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		401B5AED21DE34F000B9349B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SC367F29C8;
+				INFOPLIST_FILE = DartManiaTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rocklegend.DartManiaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DartMania.app/DartMania";
+			};
+			name = Debug;
+		};
+		401B5AEE21DE34F000B9349B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SC367F29C8;
+				INFOPLIST_FILE = DartManiaTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rocklegend.DartManiaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DartMania.app/DartMania";
+			};
+			name = Release;
+		};
+		40207F6C214ED735002E71B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		40207F6D214ED735002E71B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		40207F6F214ED735002E71B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SC367F29C8;
+				INFOPLIST_FILE = DartMania/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rocklegend.DartMania;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		40207F70214ED735002E71B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SC367F29C8;
+				INFOPLIST_FILE = DartMania/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rocklegend.DartMania;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		401B5AEC21DE34F000B9349B /* Build configuration list for PBXNativeTarget "DartManiaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				401B5AED21DE34F000B9349B /* Debug */,
+				401B5AEE21DE34F000B9349B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		40207F51214ED734002E71B4 /* Build configuration list for PBXProject "DartMania" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40207F6C214ED735002E71B4 /* Debug */,
+				40207F6D214ED735002E71B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		40207F6E214ED735002E71B4 /* Build configuration list for PBXNativeTarget "DartMania" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40207F6F214ED735002E71B4 /* Debug */,
+				40207F70214ED735002E71B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 40207F4E214ED734002E71B4 /* Project object */;
+}
