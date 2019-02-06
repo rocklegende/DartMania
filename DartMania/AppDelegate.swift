@@ -25,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //
 //        return true
         let navigationController = UINavigationController(rootViewController: rootView)
+        navigationController.navigationBar.isTranslucent = true
+        navigationController.navigationBar.backgroundColor = Settings.dartBoardRed
+        navigationController.view.backgroundColor = Settings.dartBoardRed
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
