@@ -15,8 +15,13 @@ class DashboardViewController: UIViewController, UINavigationControllerDelegate 
         
         self.title = "DartMania"
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .gray
         view.accessibilityIdentifier = "dashboardView"
+        
+        let backgroundImageView = UIImageView(image: UIImage(named: "dartboard.jpg"))
+        backgroundImageView.frame = view.frame
+        backgroundImageView.contentMode = .scaleAspectFill
+        self.view.addSubview(backgroundImageView)
 
         let startGameButton = UIButton(type: .system)
         startGameButton.setTitle("Start a game!", for: .normal)
@@ -40,6 +45,7 @@ class DashboardViewController: UIViewController, UINavigationControllerDelegate 
         joinGameButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         joinGameButton.topAnchor.constraint(equalTo: startGameButton.bottomAnchor, constant: 100).isActive = true
         // Do any additional setup after loading the view.
+        
     }
     
 

@@ -71,7 +71,6 @@ class GameScene: SKScene {
     }
     
     func configureScene() {
-        self.scaleMode = .aspectFit
         self.isUserInteractionEnabled = true
     }
     
@@ -139,6 +138,7 @@ class GameScene: SKScene {
     }
     
     func updatePoints (player: Int, hitPoints: Int) {
+        handlePlayerWon()
         if (pointsMadeInCurrentThrow + hitPoints < pointsLeft[player]) {
             pointsMadeInCurrentThrow += hitPoints
             pointsLeft[player] -= hitPoints
@@ -146,7 +146,7 @@ class GameScene: SKScene {
         } else if (pointsMadeInCurrentThrow + hitPoints == pointsLeft[player]) {
             // TODO: check if double
             pointsLeft[player] -= hitPoints
-            print("Player \(player + 1) won!")
+            handlePlayerWon()
         } else {
             switchToNextPlayer()
         }
@@ -203,5 +203,48 @@ class GameScene: SKScene {
         if currentPlayer == settings.getPlayerCount() {
             currentPlayer = 0
         }
+    }
+    
+    func handlePlayerWon() {
+        blurScreen()
+        addReplayButton()
+        addGoBackToMenuButton()
+    }
+    
+    func blurScreen() {
+        let  blur = CIFilter(name:"CIGaussianBlur",withInputParameters: ["inputRadius": 10.0])
+        self.filter = blur
+        self.shouldRasterize = true
+        self.shouldEnableEffects = true
+    }
+    
+    func removeBlur() {
+        self.filter = nil
+    }
+    
+    @objc func restartGame() {
+        removeBlur()
+    }
+    
+    @objc func goBackToMenu() {
+        self.removeFromParent()
+        self.view?.presentScene(nil)
+        
+    }
+    
+    func addReplayButton() {
+        let button = DMCustomControlsFactory.createButton(withTitle: "Play again", withWidthInPercent: 0.4)
+        self.view?.addSubview(button)
+        button.rightAnchor.constraint(equalTo: view!.centerXAnchor, constant: -5).isActive = true
+        button.bottomAnchor.constraint(equalTo: view!.bottomAnchor, constant: -view!.bounds.height * 0.2).isActive = true
+        button.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
+    }
+    
+    func addGoBackToMenuButton() {
+        let button = DMCustomControlsFactory.createButton(withTitle: "Go back", withWidthInPercent: 0.4)
+        self.view?.addSubview(button)
+        button.leftAnchor.constraint(equalTo: view!.centerXAnchor, constant: 5).isActive = true
+        button.bottomAnchor.constraint(equalTo: view!.bottomAnchor, constant: -view!.bounds.height * 0.2).isActive = true
+        button.addTarget(self, action: #selector(goBackToMenu), for: .touchUpInside)
     }
 }
