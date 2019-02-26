@@ -21,6 +21,7 @@ class DashboardViewController: UIViewController, UINavigationControllerDelegate 
         let backgroundImageView = UIImageView(image: UIImage(named: "dartboard.jpg"))
         backgroundImageView.frame = view.frame
         backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.clipsToBounds = true
         self.view.addSubview(backgroundImageView)
 
         let startGameButton = UIButton(type: .system)

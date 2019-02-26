@@ -31,7 +31,7 @@ class Dartboard {
         ["points": 50, "radius": Settings.bullsEye, "color": UIColor.black],
     ]
     
-    init(center: CGPoint, radius: CGFloat) {
+    init(center: CGPoint = Settings.defaultCenter, radius: CGFloat = Settings.defaultDartBoardRadius) {
         self.node = SKNode()
         self.center = center
         self.radius = radius

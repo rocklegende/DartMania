@@ -20,6 +20,7 @@ class GameSettingsViewController: UIViewController {
         let backgroundImageView = UIImageView(image: UIImage(named: "dartboard.jpg"))
         backgroundImageView.frame = view.frame
         backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.clipsToBounds = true
         self.view.addSubview(backgroundImageView)
         
         

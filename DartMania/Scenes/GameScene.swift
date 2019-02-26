@@ -10,38 +10,36 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    var settings: DartGameSettings!
-    var throwsLeft: Int = 3
-    var pointsMadeInCurrentThrow: Int = 0
-    var currentPlayer: Int = 0
     private var dart: Dart!
     private var dartboard: Dartboard!
     private var label: SKLabelNode!
-    private var pointsLeft: [Int] = []
     private var pointsLeftLabels: [UILabel] = []
     private var swipeStartPoint: CGPoint?
     private var swipeEndPoint: CGPoint?
+    @objc private var game: DMGame!
+    private var observations: [NSKeyValueObservation] = []
+    
+    var settings: DartGameSettings!
     
     override func didMove(to view: SKView) {
-        configureScene()
+        setConfig()
         setDartGameSettings()
         setGravity(gravity: -20.0)
-        
+        game = DMGame(settings: settings)
+        startGamePropertyObservations()
+
+        addPointsLeftLabels()
         addDartboard()
-        print(UIScreen.main.bounds.width)
-        print(dartboard.node.calculateAccumulatedFrame().size)
-        print(UIScreen.main.bounds.width / dartboard.node.calculateAccumulatedFrame().width)
         addDart()
         addHitPointsUILabel()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touchPoint = touches.first?.location(in: self) {
-            //print(dartboard.getHitPoints(point: touchPoint))
             if (dart.node.contains(touchPoint)) {
                 swipeStartPoint = touchPoint
             } else {
-                print("touch the ball!")
+                print("You didnt touch the dartarrow")
             }
         } else {
             print("error getting first touch position of dragevent")
@@ -70,7 +68,31 @@ class GameScene: SKScene {
         // Called before each frame is rendered
     }
     
-    func configureScene() {
+    func startGamePropertyObservations() {
+        let playerObservation = game.observe(\.players) { (game, change) in
+            self.handleGameStateChange()
+        }
+        let isGameFinishedObservation = game.observe(\.finished) { (game, change) in
+            if (game.finished) {
+                self.handlePlayerWon(player: game.currentPlayer)
+            }
+        }
+        observations.append(playerObservation)
+        observations.append(isGameFinishedObservation)
+    }
+    
+    func handleGameStateChange() {
+        for i in 0..<game.players.count {
+            pointsLeftLabels[i].text = "\(game.players[i]["points"] as! Int)"
+            if (game.players[i]["isActive"] as! Bool) {
+                pointsLeftLabels[i].textColor = .white
+            } else {
+                pointsLeftLabels[i].textColor = .red
+            }
+        }
+    }
+    
+    func setConfig() {
         self.isUserInteractionEnabled = true
     }
     
@@ -79,7 +101,7 @@ class GameScene: SKScene {
     }
     
     func addHitPointsUILabel() {
-        self.label = SKLabelNode(text: "Points: ")
+        self.label = SKLabelNode(text: "")
         self.label.fontSize = 60
         self.label.position = CGPoint(x: 0, y: -400)
         self.addChild(self.label)
@@ -91,15 +113,12 @@ class GameScene: SKScene {
     }
     
     func addDartboard() {
-        self.dartboard = Dartboard(center: Settings.defaultCenter, radius: Settings.defaultDartBoardRadius)
+        self.dartboard = Dartboard()
         self.addChild(dartboard.node)
     }
     
     func performDartThrow() {
-        let directionVector = CGVector(
-            dx: (swipeEndPoint?.x)! - (swipeStartPoint?.x)!,
-            dy: (swipeEndPoint?.y)! - (swipeStartPoint?.y)!
-        )
+        let directionVector = Helper.getDirectionVectorFromSwipePoints(startPoint: swipeStartPoint!, endPoint: swipeEndPoint!)
         let angles = Helper.getAngles(directionVector: directionVector)
         dart.toss(angles: angles) { (successfulThrow) in
             if (successfulThrow) {
@@ -107,6 +126,8 @@ class GameScene: SKScene {
             }
         }
     }
+    
+    
     
     func handleCompletedThrow() {
         self.evaluateThrow()
@@ -118,38 +139,23 @@ class GameScene: SKScene {
         let dartTouchPoint = CGPoint(x: dart.node.frame.minX, y: dart.node.frame.minY)
         let hitPoints = dartboard.getHitPoints(point: dartTouchPoint)
         label.text = "\(hitPoints)"
-        updatePoints(player: currentPlayer, hitPoints: hitPoints)
-        throwsLeft -= 1
-        if (throwsLeft == 0) {
-            switchToNextPlayer()
-        }
+        
+        game.updatePoints(hitPoints: hitPoints)
+        game.decreaseThrowsLeft()
     }
     
     func setDartGameSettings() {
         if let gameSettings = self.userData?.value(forKey: "gameSettings") as? DartGameSettings {
             settings = gameSettings
-            let numberOfPlayers = settings!.getPlayerCount()
-            for _ in 0..<numberOfPlayers {
-                addPointsLeftForNewPlayer()
-                addPointsLeftLabel(text: String(settings!.getMode()))
-            }
-            pointsLeftLabels.first?.textColor = .white
         }
     }
     
-    func updatePoints (player: Int, hitPoints: Int) {
-        handlePlayerWon()
-        if (pointsMadeInCurrentThrow + hitPoints < pointsLeft[player]) {
-            pointsMadeInCurrentThrow += hitPoints
-            pointsLeft[player] -= hitPoints
-            pointsLeftLabels[player].text = "\(pointsLeft[player])"
-        } else if (pointsMadeInCurrentThrow + hitPoints == pointsLeft[player]) {
-            // TODO: check if double
-            pointsLeft[player] -= hitPoints
-            handlePlayerWon()
-        } else {
-            switchToNextPlayer()
+    func addPointsLeftLabels() {
+        let numberOfPlayers = settings!.getPlayerCount()
+        for _ in 0..<numberOfPlayers {
+            addPointsLeftLabel(text: String(settings!.getMode()))
         }
+        pointsLeftLabels.first?.textColor = .white
     }
     
     func resetSwipePoints() {
@@ -157,9 +163,6 @@ class GameScene: SKScene {
         swipeEndPoint = nil
     }
     
-    func resetThrowsLeft() {
-        self.throwsLeft = 3
-    }
     
     func addPointsLeftLabel(text: String) {
         let label = UILabel()
@@ -181,33 +184,10 @@ class GameScene: SKScene {
         pointsLeftLabels.append(label)
     }
     
-    func addPointsLeftForNewPlayer() {
-        pointsLeft.append(settings!.getMode())
-    }
-    
-    func switchToNextPlayer() {
-        pointsLeftLabels[currentPlayer].textColor = .red
-        increaseCurrentPlayer()
-        pointsLeftLabels[currentPlayer].textColor = .white
-        
-        resetThrowsLeft()
-        resetPointsMadeInCurrentThrow()
-    }
-    
-    func resetPointsMadeInCurrentThrow() {
-        pointsMadeInCurrentThrow = 0
-    }
-    
-    func increaseCurrentPlayer() {
-        currentPlayer += 1
-        if currentPlayer == settings.getPlayerCount() {
-            currentPlayer = 0
-        }
-    }
-    
-    func handlePlayerWon() {
+    func handlePlayerWon(player: Int) {
         blurScreen()
-        addReplayButton()
+        //showEndOfGameScreen() (#1)
+        addReplayButton(player: player)
         addGoBackToMenuButton()
     }
     
@@ -222,6 +202,10 @@ class GameScene: SKScene {
         self.filter = nil
     }
     
+    func isBlurred() -> Bool {
+        return self.filter?.name == "CIGaussianBlur"
+    }
+    
     @objc func restartGame() {
         removeBlur()
     }
@@ -229,15 +213,26 @@ class GameScene: SKScene {
     @objc func goBackToMenu() {
         self.removeFromParent()
         self.view?.presentScene(nil)
-        
     }
     
-    func addReplayButton() {
+    func addWinnerMessage(player: Int) {
+        let label = DMCustomControlsFactory.createLabel(withText: "\(player + 1) won!")
+        self.view?.addSubview(label)
+    }
+    
+    func addReplayButton(player: Int) {
         let button = DMCustomControlsFactory.createButton(withTitle: "Play again", withWidthInPercent: 0.4)
         self.view?.addSubview(button)
         button.rightAnchor.constraint(equalTo: view!.centerXAnchor, constant: -5).isActive = true
         button.bottomAnchor.constraint(equalTo: view!.bottomAnchor, constant: -view!.bounds.height * 0.2).isActive = true
         button.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
+        
+        let label = DMCustomControlsFactory.createLabel(withText: "Player \(player + 1) won!")
+        self.view?.addSubview(label)
+        label.topAnchor.constraint(equalTo: view!.topAnchor, constant: view!.bounds.height * 0.4).isActive = true
+        label.widthAnchor.constraint(equalTo: view!.widthAnchor, multiplier: 0.7).isActive = true
+        label.centerXAnchor.constraint(equalTo: view!.centerXAnchor).isActive = true
+        
     }
     
     func addGoBackToMenuButton() {
@@ -248,3 +243,10 @@ class GameScene: SKScene {
         button.addTarget(self, action: #selector(goBackToMenu), for: .touchUpInside)
     }
 }
+
+
+/*
+ Ideen fuer bessere Struktur:
+ - #1: es gibt einen endGameView, der die Buttons hat und noch Statistiken zum Spiel etc.
+ 
+ */
