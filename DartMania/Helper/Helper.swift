@@ -22,7 +22,6 @@ class Helper {
     
     static func getDirectionVector(angles: TossingAngles) -> CGVector {
         
-        //TODO: calculate dx
         let dx = UIScreen.main.bounds.size.width * angles.xAngle / Settings.X_MAX_ANGLE
         let dy = UIScreen.main.bounds.size.height * angles.yAngle / Settings.Y_MAX_ANGLE
         
@@ -45,5 +44,12 @@ class Helper {
         
         return TossingAngles(xAngle: xAngle, yAngle: yAngle)
         
+    }
+    
+    static func getDirectionVectorFromSwipePoints(startPoint: CGPoint, endPoint: CGPoint) -> CGVector {
+        return CGVector(
+            dx: (endPoint.x) - (startPoint.x),
+            dy: (endPoint.y) - (startPoint.y)
+        )
     }
 }
