@@ -22,6 +22,11 @@ class DMGameTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         game = nil
     }
+    
+    func testStoppingGameFinishesIt() {
+        game.stop()
+        XCTAssert(game.isFinished())
+    }
 
     func testGettingToZeroPointsFinishesGame() {
         game.updatePoints(hitPoints: game.settings.getMode())
