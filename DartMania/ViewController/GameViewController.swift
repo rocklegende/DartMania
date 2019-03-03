@@ -10,9 +10,19 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, EndGameDecisionDelegate {
+    func didTapReturnToMenuButton() {
+        navigationController?.popViewController(animated: true)
+        removeFromParentViewController()
+        dismiss(animated: true, completion: nil)
+        if let view = self.view as! SKView? {
+            view.presentScene(nil)
+            
+        }
+    }
     
     var settings: DartGameSettings?
+    var game: DMGame?
     
     override func loadView() {
         self.view = SKView()
@@ -23,21 +33,27 @@ class GameViewController: UIViewController {
         view.accessibilityIdentifier = "gameView"
         
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
+            if let scene = GameScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFit
+                
+                // get notified if the presented game wants to return to the menu
+                scene.endGameDecisionDelegate = self
+                
                 scene.userData = NSMutableDictionary()
                 scene.userData?.setObject(settings ?? DartGameSettings(), forKey: "gameSettings" as NSCopying)
-                
-                // Present the scene
                 view.presentScene(scene)
             }
-            
             view.ignoresSiblingOrder = true
-            
             view.showsFPS = true
             view.showsNodeCount = true
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if let view = self.view as! SKView? {
+            view.presentScene(nil)
         }
     }
 
@@ -61,4 +77,6 @@ class GameViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    
 }

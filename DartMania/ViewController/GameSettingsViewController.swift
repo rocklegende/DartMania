@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol GameSettingsSelectionDelegate: class {
+    func didPickGameSettings(settings: DartGameSettings)
+}
+
 class GameSettingsViewController: UIViewController {
     
+    weak var gameSettingsSelectionDelegate: GameSettingsSelectionDelegate!
     var settings: DartGameSettings = DartGameSettings()
 
     override func viewDidLoad() {
@@ -17,11 +22,11 @@ class GameSettingsViewController: UIViewController {
         view.backgroundColor = UIColor.lightText
         view.accessibilityIdentifier = "gameSettingsView"
         
-        let backgroundImageView = UIImageView(image: UIImage(named: "dartboard.jpg"))
-        backgroundImageView.frame = view.frame
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.clipsToBounds = true
-        self.view.addSubview(backgroundImageView)
+//        let backgroundImageView = UIImageView(image: UIImage(named: "dartboard.jpg"))
+//        backgroundImageView.frame = view.frame
+//        backgroundImageView.contentMode = .scaleAspectFill
+//        backgroundImageView.clipsToBounds = true
+//        self.view.addSubview(backgroundImageView)
         
         
         let modeSwitch =
@@ -88,7 +93,11 @@ class GameSettingsViewController: UIViewController {
     @objc func startLocalGame() {
         let game = GameViewController()
         game.settings = settings
-        present(game, animated: true, completion: nil)
+        gameSettingsSelectionDelegate.didPickGameSettings(settings: self.settings)
+        dismiss(animated: true, completion: nil)
+        
+        //self.navigationController?.pushViewController(game, animated: true)
+        //present(game, animated: true, completion: nil)
     }
     
 
@@ -101,5 +110,9 @@ class GameSettingsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
 }

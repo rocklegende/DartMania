@@ -10,21 +10,26 @@ import XCTest
 import GameKit
 @testable import DartMania
 
-class DartManiaTests: XCTestCase {
-    
-    var gameScene: GameScene!
-    var dartboard: Dartboard!
+class DMHelperTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        gameScene = GameScene()
-        gameScene.settings = DartGameSettings()
-        
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        gameScene = nil
+    }
+    
+    func testCapsValueThatIsTooHigh() {
+        let overSizedValue = CGFloat(101)
+        let cappedValue = Helper.cap(value: overSizedValue, max: 100, min: 0)
+        XCTAssert(cappedValue == CGFloat(100))
+    }
+    
+    func testCapsValueThatIsTooLow() {
+        let overSizedValue = CGFloat(-101)
+        let cappedValue = Helper.cap(value: overSizedValue, max: 100, min: -100)
+        XCTAssert(cappedValue == CGFloat(-100))
     }
     
     func testGetDirectionVector() {
@@ -32,20 +37,6 @@ class DartManiaTests: XCTestCase {
         XCTAssert(Helper.getDirectionVector(angles: angles) == CGVector(dx: 0, dy: 0))
     }
     
-    func testPlayerWonActionsAreCorrect() {
-//        gameScene.handlePlayerWon()
-//        XCTAssert(gameScene.childNode(withName: "Play again") != nil)
-//        XCTAssert(gameScene.childNode(withName: "Go back") != nil)
-//        XCTAssert(gameScene.isBlurred())
-        XCTAssert(true)
-    }
-    
-    func testSetGravity() {
-        gameScene.setGravity(gravity: -10.0)
-        // TODO: find out why this compare doesnt work
-        //XCTAssert(gameScene.physicsWorld.gravity == -10.0)
-        XCTAssert(true)
-    }
     
     func testGetAngles() {
         let dv = CGVector(dx: 0, dy: 0)

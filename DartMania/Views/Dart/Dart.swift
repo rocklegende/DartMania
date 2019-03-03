@@ -14,6 +14,7 @@ class Dart {
     
     init() {
         node = SKSpriteNode(imageNamed: "dartarrow.png")
+        node.name = UINames.dartNode
         node.physicsBody = SKPhysicsBody(circleOfRadius: 100)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.mass = 0.02 // 20 Gramm

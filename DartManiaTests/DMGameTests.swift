@@ -12,6 +12,21 @@ import GameKit
 
 class DMGameTests: XCTestCase {
     var game: DMGame!
+    
+    func firstPlayerOfGameIsActive() -> Bool {
+        return game.players[0]["isActive"] as! Bool
+    }
+    
+    func pointsOfAllPlayersIsSetTo(value: Int) -> Bool {
+        let numberOfPlayers = game.settings.getPlayerCount()
+        for i in 0..<numberOfPlayers {
+            let points = game.players[i]["points"] as! Int
+            if (points != value) {
+                return false
+            }
+        }
+        return true
+    }
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -75,6 +90,13 @@ class DMGameTests: XCTestCase {
         game.decreaseThrowsLeft()
         let nextCurrentPlayer = game.currentPlayer
         XCTAssert(prevCurrentPlayer == nextCurrentPlayer)
+    }
+    
+    func testRestartGame() {
+        game.updatePoints(hitPoints: 80)
+        game.restart()
+        XCTAssert(pointsOfAllPlayersIsSetTo(value: game.settings.getMode()))
+        XCTAssert(firstPlayerOfGameIsActive())
     }
 
 }
