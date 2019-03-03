@@ -15,15 +15,16 @@ class DashboardViewController: UIViewController, UINavigationControllerDelegate 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = .gray
         view.accessibilityIdentifier = "dashboardView"
+        print(games)
         
         addNavBarImage()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(startGame))
-        
-        // Do any additional setup after loading the view.
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print(games)
     }
     
     func addNavBarImage() {
@@ -71,15 +72,8 @@ class DashboardViewController: UIViewController, UINavigationControllerDelegate 
 extension DashboardViewController : GameSettingsSelectionDelegate {
     func didPickGameSettings(settings: DartGameSettings) {
         let gameVC = GameViewController()
-        // gameVC.game = DMGame(settings: settings)
-        
-        
-        gameVC.settings = settings
+        gameVC.game = DMGame(settings: settings)
+        games.append(gameVC.game)
         self.navigationController?.pushViewController(gameVC, animated: true)
-        if let view = gameVC.view as! SKView? {
-            if let scene = view.scene as! GameScene? {
-                games.append(scene.game)
-            }
-        }
     }
 }

@@ -9,8 +9,13 @@
 import SpriteKit
 import GameplayKit
 
+protocol DartThrowDelegate: class {
+    func didEvaluateThrow(hitPoints: Int)
+}
+
 class GameScene: SKScene, EndGameDecisionDelegate {
     weak var endGameDecisionDelegate: EndGameDecisionDelegate!
+    weak var dartThrowDelegate: DartThrowDelegate!
     
     func didTapReturnToMenuButton() {
         self.removeFromParent()
@@ -42,12 +47,12 @@ class GameScene: SKScene, EndGameDecisionDelegate {
     
     override func didMove(to view: SKView) {
         setConfig()
-        setDartGameSettings()
+        //setDartGameSettings()
         setGravity(gravity: -20.0)
-        game = DMGame(settings: settings)
-        startGamePropertyObservations()
+        //game = DMGame(settings: settings)
+        //startGamePropertyObservations()
 
-        addPointsLeftLabels()
+        //addPointsLeftLabels()
         addDartboard()
         addDart()
         addHitPointsUILabel()
@@ -88,6 +93,25 @@ class GameScene: SKScene, EndGameDecisionDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         
+    }
+    
+    func initSceneFromGame(_ game: DMGame) {
+        let numberOfPlayers = game.players.count
+        for _ in 0..<numberOfPlayers {
+            addPointsLeftLabel(text: "")
+        }
+        updateStateAccordingTo(game)
+    }
+    
+    func updateStateAccordingTo(_ game: DMGame) {
+        for i in 0..<game.players.count {
+            pointsLeftLabels[i].text = "\(game.players[i]["points"] as! Int)"
+            if (game.players[i]["isActive"] as! Bool) {
+                pointsLeftLabels[i].textColor = .white
+            } else {
+                pointsLeftLabels[i].textColor = .red
+            }
+        }
     }
     
     func startGamePropertyObservations() {
@@ -165,8 +189,10 @@ class GameScene: SKScene, EndGameDecisionDelegate {
         let hitPoints = dartboard.getHitPoints(point: dartTouchPoint)
         hitPointsLabel.text = "\(hitPoints)"
         
-        game.updatePoints(hitPoints: hitPoints)
-        game.stop()
+        dartThrowDelegate.didEvaluateThrow(hitPoints: hitPoints)
+        
+//        game.updatePoints(hitPoints: hitPoints)
+//        game.stop()
     }
     
     func setDartGameSettings() {
@@ -175,7 +201,7 @@ class GameScene: SKScene, EndGameDecisionDelegate {
         }
     }
     
-    func addPointsLeftLabels() {
+    func addPointsLeftLabels(numberOfPlayers: Int) {
         let numberOfPlayers = settings!.getPlayerCount()
         for _ in 0..<numberOfPlayers {
             addPointsLeftLabel(text: String(settings!.getMode()))
@@ -241,13 +267,11 @@ class GameScene: SKScene, EndGameDecisionDelegate {
         return self.filter?.name == "CIGaussianBlur"
     }
     
+    // endGameDecisionDelegate.didRequestRestartOfGame()
     @objc func restartGame() {
         unblurScreen()
         game.restart()
     }
     
-    @objc func goBackToMenu() {
-        self.removeFromParent()
-        self.view?.presentScene(nil)
-    }
+    // endGameDecisionDelegate.didRequestGoBackToMenu()
 }

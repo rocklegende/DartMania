@@ -91,13 +91,8 @@ class GameSettingsViewController: UIViewController {
     }
     
     @objc func startLocalGame() {
-        let game = GameViewController()
-        game.settings = settings
         gameSettingsSelectionDelegate.didPickGameSettings(settings: self.settings)
         dismiss(animated: true, completion: nil)
-        
-        //self.navigationController?.pushViewController(game, animated: true)
-        //present(game, animated: true, completion: nil)
     }
     
 

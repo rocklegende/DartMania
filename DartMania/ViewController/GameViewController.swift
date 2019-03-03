@@ -10,19 +10,10 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController, EndGameDecisionDelegate {
-    func didTapReturnToMenuButton() {
-        navigationController?.popViewController(animated: true)
-        removeFromParentViewController()
-        dismiss(animated: true, completion: nil)
-        if let view = self.view as! SKView? {
-            view.presentScene(nil)
-            
-        }
-    }
-    
-    var settings: DartGameSettings?
-    var game: DMGame?
+class GameViewController: UIViewController {
+    var game: DMGame!
+    var scene: GameScene?
+    private var observations: [NSKeyValueObservation] = []
     
     override func loadView() {
         self.view = SKView()
@@ -31,6 +22,7 @@ class GameViewController: UIViewController, EndGameDecisionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.accessibilityIdentifier = "gameView"
+        startGamePropertyObservations()
         
         if let view = self.view as! SKView? {
             if let scene = GameScene(fileNamed: "GameScene") {
@@ -39,10 +31,11 @@ class GameViewController: UIViewController, EndGameDecisionDelegate {
                 
                 // get notified if the presented game wants to return to the menu
                 scene.endGameDecisionDelegate = self
-                
-                scene.userData = NSMutableDictionary()
-                scene.userData?.setObject(settings ?? DartGameSettings(), forKey: "gameSettings" as NSCopying)
+                scene.dartThrowDelegate = self
+                self.scene = scene
                 view.presentScene(scene)
+                scene.initSceneFromGame(game!)
+                
             }
             view.ignoresSiblingOrder = true
             view.showsFPS = true
@@ -52,9 +45,27 @@ class GameViewController: UIViewController, EndGameDecisionDelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        stopGamePropertyObservations()
         if let view = self.view as! SKView? {
             view.presentScene(nil)
         }
+    }
+    
+    func startGamePropertyObservations() {
+        let playerObservation = game.observe(\.players) { (game, change) in
+            self.scene!.updateStateAccordingTo(game)
+        }
+        let isGameFinishedObservation = game.observe(\.isOver) { (game, change) in
+            if (game.isOver) {
+                self.scene!.handlePlayerWon(player: game.currentPlayer)
+            }
+        }
+        observations.append(playerObservation)
+        observations.append(isGameFinishedObservation)
+    }
+    
+    internal func stopGamePropertyObservations() {
+        observations = []
     }
 
     override var shouldAutorotate: Bool {
@@ -79,4 +90,22 @@ class GameViewController: UIViewController, EndGameDecisionDelegate {
     }
     
     
+}
+
+extension GameViewController : EndGameDecisionDelegate {
+    func didTapReturnToMenuButton() {
+        navigationController?.popViewController(animated: true)
+        removeFromParentViewController()
+        dismiss(animated: true, completion: nil)
+        if let view = self.view as! SKView? {
+            view.presentScene(nil)
+            
+        }
+    }
+}
+
+extension GameViewController : DartThrowDelegate {
+    func didEvaluateThrow(hitPoints: Int) {
+        game?.updatePoints(hitPoints: hitPoints)
+    }
 }
