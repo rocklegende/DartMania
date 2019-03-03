@@ -17,13 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let rootView: DashboardViewController = DashboardViewController()
+        let collectionViewControllerLayout = UICollectionViewFlowLayout()
+        let rootView: DashboardViewController = DashboardViewController(collectionViewLayout: collectionViewControllerLayout)
         
-//        if let window = self.window {
-//            window.rootViewController = rootView
-//        }
-//
-//        return true
+        
+        
         let navigationController = UINavigationController(rootViewController: rootView)
         navigationController.navigationBar.isTranslucent = true
         self.window = UIWindow(frame: UIScreen.main.bounds)
