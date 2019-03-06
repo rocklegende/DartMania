@@ -22,6 +22,7 @@ class DashboardViewController: UICollectionViewController, UINavigationControlle
         
         addNavBarImage()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(startGame))
+        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "startNewGameButton"
     }
     
     override func viewDidAppear(_ animated: Bool) {

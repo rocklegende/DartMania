@@ -48,16 +48,12 @@ class DMEndGameView: UIView {
     }
     
     @objc func restartGame() {
-//        unblurScreen()
-//        game.restart()
-        print("restart pressed")
+        endGameDecisionDelegate.didTapRestartButton()
+        removeFromSuperview()
     }
     
     @objc func goBackToMenu() {
-//        self.removeFromParent()
-//        self.view?.presentScene(nil)
         endGameDecisionDelegate.didTapReturnToMenuButton()
-        print("go back button was pressed")
     }
 
 }
