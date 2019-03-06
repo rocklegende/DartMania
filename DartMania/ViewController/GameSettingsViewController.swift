@@ -10,6 +10,7 @@ import UIKit
 
 class GameSettingsViewController: UIViewController {
     
+    weak var gameSettingsSelectionDelegate: GameSettingsSelectionDelegate!
     var settings: DartGameSettings = DartGameSettings()
 
     override func viewDidLoad() {
@@ -17,11 +18,11 @@ class GameSettingsViewController: UIViewController {
         view.backgroundColor = UIColor.lightText
         view.accessibilityIdentifier = "gameSettingsView"
         
-        let backgroundImageView = UIImageView(image: UIImage(named: "dartboard.jpg"))
-        backgroundImageView.frame = view.frame
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.clipsToBounds = true
-        self.view.addSubview(backgroundImageView)
+//        let backgroundImageView = UIImageView(image: UIImage(named: "dartboard.jpg"))
+//        backgroundImageView.frame = view.frame
+//        backgroundImageView.contentMode = .scaleAspectFill
+//        backgroundImageView.clipsToBounds = true
+//        self.view.addSubview(backgroundImageView)
         
         
         let modeSwitch =
@@ -86,20 +87,12 @@ class GameSettingsViewController: UIViewController {
     }
     
     @objc func startLocalGame() {
-        let game = GameViewController()
-        game.settings = settings
-        present(game, animated: true, completion: nil)
+        gameSettingsSelectionDelegate.didPickGameSettings(settings: self.settings)
+        dismiss(animated: true, completion: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
-    */
 
 }

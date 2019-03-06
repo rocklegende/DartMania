@@ -11,8 +11,9 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-    
-    var settings: DartGameSettings?
+    var game: DMGame!
+    var scene: GameScene?
+    private var observations: [NSKeyValueObservation] = []
     
     override func loadView() {
         self.view = SKView()
@@ -21,24 +22,50 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.accessibilityIdentifier = "gameView"
+        startGamePropertyObservations()
         
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
+            if let scene = GameScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFit
-                scene.userData = NSMutableDictionary()
-                scene.userData?.setObject(settings ?? DartGameSettings(), forKey: "gameSettings" as NSCopying)
                 
-                // Present the scene
+                // get notified if the presented game wants to return to the menu
+                scene.endGameDecisionDelegate = self
+                scene.dartThrowDelegate = self
+                self.scene = scene
                 view.presentScene(scene)
+                scene.initSceneFromGame(game!)
+                
             }
-            
             view.ignoresSiblingOrder = true
-            
             view.showsFPS = true
             view.showsNodeCount = true
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopGamePropertyObservations()
+        if let view = self.view as! SKView? {
+            view.presentScene(nil)
+        }
+    }
+    
+    func startGamePropertyObservations() {
+        let playerObservation = game.observe(\.players) { (game, change) in
+            self.scene!.updateStateAccordingTo(game)
+        }
+        let isGameFinishedObservation = game.observe(\.isOver) { (game, change) in
+            if (game.isOver) {
+                self.scene!.handlePlayerWon(player: game.currentPlayer)
+            }
+        }
+        observations.append(playerObservation)
+        observations.append(isGameFinishedObservation)
+    }
+    
+    internal func stopGamePropertyObservations() {
+        observations = []
     }
 
     override var shouldAutorotate: Bool {
@@ -60,5 +87,29 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    
+}
+
+extension GameViewController : EndGameDecisionDelegate {
+    func didTapRestartButton() {
+        game.restart()
+    }
+    
+    func didTapReturnToMenuButton() {
+        navigationController?.popViewController(animated: true)
+        removeFromParentViewController()
+        dismiss(animated: true, completion: nil)
+        if let view = self.view as! SKView? {
+            view.presentScene(nil)
+            
+        }
+    }
+}
+
+extension GameViewController : DartThrowDelegate {
+    func didEvaluateThrow(hitPoints: Int) {
+        game?.updatePoints(hitPoints: hitPoints)
     }
 }

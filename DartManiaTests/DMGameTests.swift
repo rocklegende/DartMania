@@ -12,6 +12,21 @@ import GameKit
 
 class DMGameTests: XCTestCase {
     var game: DMGame!
+    
+    func firstPlayerOfGameIsActive() -> Bool {
+        return game.players[0]["isActive"] as! Bool
+    }
+    
+    func pointsOfAllPlayersIsSetTo(value: Int) -> Bool {
+        let numberOfPlayers = game.settings.getPlayerCount()
+        for i in 0..<numberOfPlayers {
+            let points = game.players[i]["points"] as! Int
+            if (points != value) {
+                return false
+            }
+        }
+        return true
+    }
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -21,6 +36,11 @@ class DMGameTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         game = nil
+    }
+    
+    func testStoppingGameFinishesIt() {
+        game.stop()
+        XCTAssert(game.isFinished())
     }
 
     func testGettingToZeroPointsFinishesGame() {
@@ -70,6 +90,21 @@ class DMGameTests: XCTestCase {
         game.decreaseThrowsLeft()
         let nextCurrentPlayer = game.currentPlayer
         XCTAssert(prevCurrentPlayer == nextCurrentPlayer)
+    }
+    
+    func testSumOfMultipleThrowsIsCorrect() {
+        // 501 = 160 + 180 + 161
+        game.updatePoints(hitPoints: 160)
+        game.updatePoints(hitPoints: 180)
+        game.updatePoints(hitPoints: 161)
+        XCTAssert(game.isFinished())
+    }
+    
+    func testRestartGame() {
+        game.updatePoints(hitPoints: 80)
+        game.restart()
+        XCTAssert(pointsOfAllPlayersIsSetTo(value: game.settings.getMode()))
+        XCTAssert(firstPlayerOfGameIsActive())
     }
 
 }

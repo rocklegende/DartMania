@@ -12,7 +12,7 @@ class DMGame: NSObject {
      
     private var throwsLeft: Int = 3
     private var pointsMadeInCurrentThrow: Int = 0
-    @objc dynamic var finished: Bool = false
+    @objc dynamic var isOver: Bool = false
     @objc dynamic var players: [[String : Any]] = []
     var currentPlayer: Int = 0
     var settings: DartGameSettings
@@ -23,14 +23,6 @@ class DMGame: NSObject {
         initPlayers()
     }
     
-    private func setPlayerActive(withNumber number: Int) {
-        let numberOfPlayers = settings.getPlayerCount()
-        for i in 0..<numberOfPlayers {
-            players[i].updateValue(false, forKey: "isActive")
-        }
-        players[number].updateValue(true, forKey: "isActive")
-    }
-    
     private func initPlayers() {
         let numberOfPlayers = settings.getPlayerCount()
         for _ in 0..<numberOfPlayers {
@@ -38,50 +30,48 @@ class DMGame: NSObject {
         }
         setPlayerActive(withNumber: 0)
     }
-     
-     
-    func state() {
-        
+    
+    private func updateValueForAllPlayers(value: Any, key: String) {
+        let numberOfPlayers = settings.getPlayerCount()
+        for i in 0..<numberOfPlayers {
+            players[i].updateValue(value, forKey: key)
+        }
     }
-     
-    func start() {
-        
+    
+    private func setPlayerActive(withNumber number: Int) {
+        updateValueForAllPlayers(value: false, key: "isActive")
+        players[number].updateValue(true, forKey: "isActive")
     }
-     
+    
     func stop() {
-        finished = true
+        isOver = true
     }
      
     func restart() {
-        
+        isOver = false
+        updateValueForAllPlayers(value: settings.getMode(), key: "points")
+        setPlayerActive(withNumber: 0)
     }
      
     func updatePoints (hitPoints: Int) {
         if let pointsLeft = players[currentPlayer]["points"] as? Int {
-            if (pointsMadeInCurrentThrow + hitPoints < pointsLeft) {
-                pointsMadeInCurrentThrow += hitPoints
+            if (pointsLeft - hitPoints > 0) {
                 players[currentPlayer].updateValue(pointsLeft - hitPoints, forKey: "points")
-            } else if (pointsMadeInCurrentThrow + hitPoints == pointsLeft) {
+            } else if (pointsLeft - hitPoints == 0) {
                 // TODO: check if double
                 players[currentPlayer].updateValue(pointsLeft - hitPoints, forKey: "points")
-                finished = true
+                isOver = true
             } else {
                 switchToNextPlayer()
             }
         }
-        
+        decreaseThrowsLeft()
     }
      
-    func addPlayer() {
-        
-    }
-     
-    func removePlayer() {
-        
-    }
-     
+
+    
     func isFinished() -> Bool {
-        return finished
+        return isOver
     }
      
     func switchToNextPlayer() {
@@ -114,4 +104,29 @@ class DMGame: NSObject {
     func resetThrowsLeft() {
         self.throwsLeft = 3
     }
+    
+    //    func addPlayer() {
+    //
+    //    }
+    //
+    //    func removePlayer() {
+    //
+    //    }
+    //
+    func stateAsString() -> String {
+        var stateString = ""
+        for i in 0..<players.count {
+            stateString += "Player \(i + 1): \(players[i]["points"] as! Int)"
+            if (players[i]["isActive"] as! Bool) {
+                stateString += " -> ist dran"
+            }
+            stateString += "\n"
+        }
+        
+        return stateString
+    }
+    //
+    //    func start() {
+    //
+    //    }
 }

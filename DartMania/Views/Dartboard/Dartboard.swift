@@ -10,11 +10,10 @@ import UIKit
 import GameplayKit
 
 class Dartboard {
-    
+    private var elements: [DartboardElement]
+    private var center: CGPoint
+    private var radius: CGFloat
     var node: SKNode
-    var elements: [DartboardElement]
-    var center: CGPoint
-    var radius: CGFloat
     var singleFieldComponents = [
         ["pointsMultiplier": 0, "radius": Settings.outerRing, "color": Settings.dartBoardBlack],
         ["pointsMultiplier": 0, "radius": Settings.outerDoubleWire, "color": UIColor.black],
@@ -33,6 +32,7 @@ class Dartboard {
     
     init(center: CGPoint = Settings.defaultCenter, radius: CGFloat = Settings.defaultDartBoardRadius) {
         self.node = SKNode()
+        self.node.name = UINames.dartboardNode
         self.center = center
         self.radius = radius
         self.elements = []

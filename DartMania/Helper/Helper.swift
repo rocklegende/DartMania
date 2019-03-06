@@ -21,10 +21,8 @@ class Helper {
     }
     
     static func getDirectionVector(angles: TossingAngles) -> CGVector {
-        
         let dx = UIScreen.main.bounds.size.width * angles.xAngle / Settings.X_MAX_ANGLE
         let dy = UIScreen.main.bounds.size.height * angles.yAngle / Settings.Y_MAX_ANGLE
-        
         return CGVector(dx: dx, dy: dy)
     }
     

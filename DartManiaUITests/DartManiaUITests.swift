@@ -31,14 +31,14 @@ class DartManiaUITests: XCTestCase {
     func testClickOnStartOpensGameSettings() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        app.buttons["Start a game!"].tap()
+        app.buttons["startNewGameButton"].tap()
         XCTAssertTrue(app.otherElements["gameSettingsView"].exists);
     }
     
     func testClickOnStartLocalGameOpensGame() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        app.buttons["Start a game!"].tap()
+        app.buttons["startNewGameButton"].tap()
         app.buttons["Start local game"].tap()
         XCTAssertTrue(app.otherElements["gameView"].exists);
     }
