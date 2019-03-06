@@ -92,6 +92,14 @@ class DMGameTests: XCTestCase {
         XCTAssert(prevCurrentPlayer == nextCurrentPlayer)
     }
     
+    func testSumOfMultipleThrowsIsCorrect() {
+        // 501 = 160 + 180 + 161
+        game.updatePoints(hitPoints: 160)
+        game.updatePoints(hitPoints: 180)
+        game.updatePoints(hitPoints: 161)
+        XCTAssert(game.isFinished())
+    }
+    
     func testRestartGame() {
         game.updatePoints(hitPoints: 80)
         game.restart()

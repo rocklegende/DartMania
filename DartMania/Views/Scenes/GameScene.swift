@@ -9,56 +9,24 @@
 import SpriteKit
 import GameplayKit
 
-protocol DartThrowDelegate: class {
-    func didEvaluateThrow(hitPoints: Int)
-}
-
-class GameScene: SKScene, EndGameDecisionDelegate {
+class GameScene: SKScene {
     weak var endGameDecisionDelegate: EndGameDecisionDelegate!
     weak var dartThrowDelegate: DartThrowDelegate!
-    
-    func didTapReturnToMenuButton() {
-        self.removeFromParent()
-        self.view?.presentScene(nil)
-        endGameDecisionDelegate.didTapReturnToMenuButton()
-    }
     
     private var dart: Dart!
     private var dartboard: Dartboard!
     private var hitPointsLabel: SKLabelNode!
     private var pointsLeftLabels: [UILabel] = []
-    private var observations: [NSKeyValueObservation] = []
-    
     private var swipeStartPoint: CGPoint?
     private var swipeEndPoint: CGPoint?
-    var settings: DartGameSettings!
-    @objc var game: DMGame!
-    
-    override func willMove(from view: SKView) {
-        cleanUp()
-    }
-    
-    internal func cleanUp() {
-        self.removeAllChildren()
-        self.game = nil
-        self.settings = nil
-        stopGamePropertyObservations()
-    }
     
     override func didMove(to view: SKView) {
         setConfig()
-        //setDartGameSettings()
         setGravity(gravity: -20.0)
-        //game = DMGame(settings: settings)
-        //startGamePropertyObservations()
-
-        //addPointsLeftLabels()
         addDartboard()
         addDart()
         addHitPointsUILabel()
     }
-    
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touchPoint = touches.first?.location(in: self) {
@@ -104,34 +72,6 @@ class GameScene: SKScene, EndGameDecisionDelegate {
     }
     
     func updateStateAccordingTo(_ game: DMGame) {
-        for i in 0..<game.players.count {
-            pointsLeftLabels[i].text = "\(game.players[i]["points"] as! Int)"
-            if (game.players[i]["isActive"] as! Bool) {
-                pointsLeftLabels[i].textColor = .white
-            } else {
-                pointsLeftLabels[i].textColor = .red
-            }
-        }
-    }
-    
-    func startGamePropertyObservations() {
-        let playerObservation = game.observe(\.players) { (game, change) in
-            self.handleGameStateChange()
-        }
-        let isGameFinishedObservation = game.observe(\.isOver) { (game, change) in
-            if (game.isOver) {
-                self.handlePlayerWon(player: game.currentPlayer)
-            }
-        }
-        observations.append(playerObservation)
-        observations.append(isGameFinishedObservation)
-    }
-    
-    internal func stopGamePropertyObservations() {
-        observations = []
-    }
-    
-    func handleGameStateChange() {
         for i in 0..<game.players.count {
             pointsLeftLabels[i].text = "\(game.players[i]["points"] as! Int)"
             if (game.players[i]["isActive"] as! Bool) {
@@ -188,25 +128,7 @@ class GameScene: SKScene, EndGameDecisionDelegate {
         let dartTouchPoint = CGPoint(x: dart.node.frame.minX, y: dart.node.frame.minY)
         let hitPoints = dartboard.getHitPoints(point: dartTouchPoint)
         hitPointsLabel.text = "\(hitPoints)"
-        
         dartThrowDelegate.didEvaluateThrow(hitPoints: hitPoints)
-        
-//        game.updatePoints(hitPoints: hitPoints)
-//        game.stop()
-    }
-    
-    func setDartGameSettings() {
-        if let gameSettings = self.userData?.value(forKey: "gameSettings") as? DartGameSettings {
-            settings = gameSettings
-        }
-    }
-    
-    func addPointsLeftLabels(numberOfPlayers: Int) {
-        let numberOfPlayers = settings!.getPlayerCount()
-        for _ in 0..<numberOfPlayers {
-            addPointsLeftLabel(text: String(settings!.getMode()))
-        }
-        pointsLeftLabels.first?.textColor = .white
     }
     
     func resetSwipePoints() {
@@ -251,7 +173,6 @@ class GameScene: SKScene, EndGameDecisionDelegate {
     }
     
     
-    
     func blurScreen() {
         let  blur = CIFilter(name:"CIGaussianBlur",withInputParameters: ["inputRadius": 10.0])
         self.filter = blur
@@ -267,11 +188,24 @@ class GameScene: SKScene, EndGameDecisionDelegate {
         return self.filter?.name == "CIGaussianBlur"
     }
     
-    // endGameDecisionDelegate.didRequestRestartOfGame()
-    @objc func restartGame() {
-        unblurScreen()
-        game.restart()
+    override func willMove(from view: SKView) {
+        cleanUp()
     }
     
-    // endGameDecisionDelegate.didRequestGoBackToMenu()
+    internal func cleanUp() {
+        self.removeAllChildren()
+    }
+}
+
+extension GameScene : EndGameDecisionDelegate {
+    func didTapRestartButton() {
+        unblurScreen()
+        endGameDecisionDelegate.didTapRestartButton()
+    }
+    
+    func didTapReturnToMenuButton() {
+        self.removeFromParent()
+        self.view?.presentScene(nil)
+        endGameDecisionDelegate.didTapReturnToMenuButton()
+    }
 }

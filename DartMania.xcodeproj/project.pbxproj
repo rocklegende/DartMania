@@ -32,6 +32,9 @@
 		40BB46602225CF110015397B /* DMGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BB465F2225CF110015397B /* DMGameTests.swift */; };
 		40BB466222266C530015397B /* DMGameSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BB466122266C530015397B /* DMGameSceneTests.swift */; };
 		40F8871C222C25AF00945993 /* DMEndGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8871B222C25AF00945993 /* DMEndGameView.swift */; };
+		40F8871F222C9BDF00945993 /* EndGameDecisionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8871E222C9BDF00945993 /* EndGameDecisionDelegate.swift */; };
+		40F88721222C9C0500945993 /* GameSettingsDecisionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F88720222C9C0500945993 /* GameSettingsDecisionDelegate.swift */; };
+		40F88723222C9C5200945993 /* DartThrowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F88722222C9C5200945993 /* DartThrowDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,9 @@
 		40BB465F2225CF110015397B /* DMGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGameTests.swift; sourceTree = "<group>"; };
 		40BB466122266C530015397B /* DMGameSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGameSceneTests.swift; sourceTree = "<group>"; };
 		40F8871B222C25AF00945993 /* DMEndGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMEndGameView.swift; sourceTree = "<group>"; };
+		40F8871E222C9BDF00945993 /* EndGameDecisionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameDecisionDelegate.swift; sourceTree = "<group>"; };
+		40F88720222C9C0500945993 /* GameSettingsDecisionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsDecisionDelegate.swift; sourceTree = "<group>"; };
+		40F88722222C9C5200945993 /* DartThrowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartThrowDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,17 +160,18 @@
 		40207F58214ED734002E71B4 /* DartMania */ = {
 			isa = PBXGroup;
 			children = (
+				40F8871D222C9BB700945993 /* Protocols */,
 				40644DEA22020DBA00EC9245 /* ViewController */,
 				40BB465E2223E8D10015397B /* Views */,
 				40BB465D2223E8C00015397B /* Model */,
 				402FD4D12208733A009C3207 /* CustomControls */,
 				40644DED22020E7200EC9245 /* Helper */,
 				40644DEB22020E0B00EC9245 /* Settings */,
-				40207F63214ED735002E71B4 /* Main.storyboard */,
 				402BD4C62228349300E199A3 /* Constants */,
 				40207F59214ED734002E71B4 /* AppDelegate.swift */,
 				40207F66214ED735002E71B4 /* Assets.xcassets */,
 				40207F68214ED735002E71B4 /* LaunchScreen.storyboard */,
+				40207F63214ED735002E71B4 /* Main.storyboard */,
 				40207F6B214ED735002E71B4 /* Info.plist */,
 			);
 			path = DartMania;
@@ -257,6 +264,16 @@
 				40F8871B222C25AF00945993 /* DMEndGameView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		40F8871D222C9BB700945993 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				40F8871E222C9BDF00945993 /* EndGameDecisionDelegate.swift */,
+				40F88720222C9C0500945993 /* GameSettingsDecisionDelegate.swift */,
+				40F88722222C9C5200945993 /* DartThrowDelegate.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -413,11 +430,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40F88723222C9C5200945993 /* DartThrowDelegate.swift in Sources */,
 				402BD4C8222834D700E199A3 /* UINames.swift in Sources */,
 				4062927721C585E6004AC627 /* Dart.swift in Sources */,
 				40207F60214ED735002E71B4 /* GameScene.swift in Sources */,
+				40F88721222C9C0500945993 /* GameSettingsDecisionDelegate.swift in Sources */,
 				40207F62214ED735002E71B4 /* GameViewController.swift in Sources */,
 				401406CF21D438D3006D7F6F /* DartGameSettings.swift in Sources */,
+				40F8871F222C9BDF00945993 /* EndGameDecisionDelegate.swift in Sources */,
 				40BB465A221EB4A40015397B /* DMGame.swift in Sources */,
 				40184156217CC6490073477A /* DartboardElement.swift in Sources */,
 				40207F76215B5FA5002E71B4 /* Helper.swift in Sources */,

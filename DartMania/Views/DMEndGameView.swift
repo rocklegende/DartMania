@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol EndGameDecisionDelegate : class {
-    func didTapReturnToMenuButton()
-}
-
 class DMEndGameView: UIView {
     
     weak var endGameDecisionDelegate: EndGameDecisionDelegate!
@@ -63,13 +59,5 @@ class DMEndGameView: UIView {
         endGameDecisionDelegate.didTapReturnToMenuButton()
         print("go back button was pressed")
     }
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }

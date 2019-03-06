@@ -18,8 +18,8 @@ class DMGameSceneTests: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         gameScene = GameScene()
-        gameScene.settings = DartGameSettings()
-        gameScene.game = DMGame(settings: gameScene.settings)
+//        gameScene.settings = DartGameSettings()
+//        gameScene.game = DMGame(settings: gameScene.settings)
         
     }
 
@@ -58,11 +58,6 @@ class DMGameSceneTests: XCTestCase {
     func testResetSwipePoints () {
         gameScene.resetSwipePoints()
         XCTAssert(gameScene.getSwipePoints() == [nil, nil])
-    }
-    
-    func testRestartGame() {
-        gameScene.restartGame()
-        XCTAssert(gameScene.game.isOver == false)
     }
     
     func testAddHitPointsLabel() {

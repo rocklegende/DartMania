@@ -55,10 +55,9 @@ class DMGame: NSObject {
      
     func updatePoints (hitPoints: Int) {
         if let pointsLeft = players[currentPlayer]["points"] as? Int {
-            if (pointsMadeInCurrentThrow + hitPoints < pointsLeft) {
-                pointsMadeInCurrentThrow += hitPoints
+            if (pointsLeft - hitPoints > 0) {
                 players[currentPlayer].updateValue(pointsLeft - hitPoints, forKey: "points")
-            } else if (pointsMadeInCurrentThrow + hitPoints == pointsLeft) {
+            } else if (pointsLeft - hitPoints == 0) {
                 // TODO: check if double
                 players[currentPlayer].updateValue(pointsLeft - hitPoints, forKey: "points")
                 isOver = true

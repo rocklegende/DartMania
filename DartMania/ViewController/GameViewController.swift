@@ -93,6 +93,10 @@ class GameViewController: UIViewController {
 }
 
 extension GameViewController : EndGameDecisionDelegate {
+    func didTapRestartButton() {
+        game.restart()
+    }
+    
     func didTapReturnToMenuButton() {
         navigationController?.popViewController(animated: true)
         removeFromParentViewController()
