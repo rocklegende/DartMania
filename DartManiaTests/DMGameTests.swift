@@ -106,5 +106,11 @@ class DMGameTests: XCTestCase {
         XCTAssert(pointsOfAllPlayersIsSetTo(value: game.settings.getMode()))
         XCTAssert(firstPlayerOfGameIsActive())
     }
+    
+    func testThrowingImpossibleValuesLeadsToFailure() {
+        let pointsThrown = -10
+        game.updatePoints(hitPoints: pointsThrown)
+        //XCTAssert()
+    }
 
 }

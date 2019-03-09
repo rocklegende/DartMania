@@ -54,6 +54,11 @@ class DMGame: NSObject {
     }
      
     func updatePoints (hitPoints: Int) {
+        precondition(
+            hitPoints > 0 && hitPoints <= 3 * Settings.pointsArray.max()!,
+            "you can't throw points that are <= 0 or > \(Settings.pointsArray.max()! * 3)"
+        )
+        
         if let pointsLeft = players[currentPlayer]["points"] as? Int {
             if (pointsLeft - hitPoints > 0) {
                 players[currentPlayer].updateValue(pointsLeft - hitPoints, forKey: "points")

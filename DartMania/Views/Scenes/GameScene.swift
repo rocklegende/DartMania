@@ -129,8 +129,6 @@ class GameScene: SKScene {
         let hitPoints = dartboard.getHitPoints(point: dartTouchPoint)
         hitPointsLabel.text = "\(hitPoints)"
         dartThrowDelegate.didEvaluateThrow(hitPoints: hitPoints)
-        
-        handlePlayerWon(player: 0)
     }
     
     func resetSwipePoints() {
