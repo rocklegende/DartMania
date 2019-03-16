@@ -26,18 +26,10 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             if let scene = GameScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                
-                
-                // get notified if the presented game wants to return to the menu
-                
-                
-                
                 self.scene = scene
                 setupScene()
                 view.presentScene(scene)
                 scene.initSceneFromGame(game!)
-                
             }
             view.ignoresSiblingOrder = true
             view.showsFPS = true

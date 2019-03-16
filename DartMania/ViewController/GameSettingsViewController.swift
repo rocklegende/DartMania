@@ -83,7 +83,7 @@ class GameSettingsViewController: UIViewController {
     }
     
     @objc func handlePlayerCountChange(sender: UISegmentedControl) {
-        settings.setPlayerCount(count: Int(Settings.availablePlayerCounts[sender.selectedSegmentIndex])!)
+        settings.setNumberOfPlayers(Int(Settings.availablePlayerCounts[sender.selectedSegmentIndex])!)
     }
     
     @objc func startLocalGame() {

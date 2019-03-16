@@ -10,7 +10,15 @@ import XCTest
 import GameKit
 @testable import DartMania
 
-class DMGameSceneTests: XCTestCase {
+class DMGameSceneTests: XCTestCase, EndGameDecisionDelegate {
+    func didTapReturnToMenuButton() {
+        
+    }
+    
+    func didTapRestartButton() {
+        
+    }
+    
     
     var gameScene: GameScene!
     var dartboard: Dartboard!
@@ -18,6 +26,9 @@ class DMGameSceneTests: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         gameScene = GameScene()
+        gameScene.addDart()
+        gameScene.addDartboard()
+        
 //        gameScene.settings = DartGameSettings()
 //        gameScene.game = DMGame(settings: gameScene.settings)
         
@@ -28,10 +39,36 @@ class DMGameSceneTests: XCTestCase {
         gameScene = nil
     }
     
+    func testDartboardIsAddedWhenMovingToScene() {
+        gameScene.setupScene()
+        XCTAssert(gameScene.childNode(withName: UINames.dartboardNode) != nil)
+    }
+    
+    func testDartIsAddedWhenMovingToScene() {
+        gameScene.setupScene()
+        XCTAssert(gameScene.childNode(withName: UINames.dartNode) != nil)
+    }
+    
+    func testUserInteractionIsEnabled() {
+        gameScene.setupScene()
+        XCTAssert(gameScene.isUserInteractionEnabled)
+    }
+    
+    func testGravityIsSetCorrectlyAfterMovingToScene() {
+        gameScene.setupScene()
+        gameScene.physicsWorld.gravity = CGVector(dx: 0, dy: gameScene.gravity)
+    }
+    
     func testSetGravity() {
-        gameScene.setGravity(gravity: -10.0)
+        gameScene.setGravity(-10.0)
         let gravity = gameScene.physicsWorld.gravity
         XCTAssert(gravity == CGVector(dx: 0, dy: -10.0))
+    }
+    
+    func testScreenIsUnblurredAfterRestart() {
+        gameScene.endGameDecisionDelegate = self
+        gameScene.didTapRestartButton()
+        XCTAssert(!gameScene.isShowingEndGameEffect())
     }
     
     func testPlayerWonActionsAreCorrect() {
@@ -42,17 +79,17 @@ class DMGameSceneTests: XCTestCase {
     }
     
     func testScreenIsNotBlurredAtStart() {
-        XCTAssert(!gameScene.isBlurred())
+        XCTAssert(!gameScene.isShowingEndGameEffect())
     }
     
     func testBlurScreen() {
-        gameScene.blurScreen()
-        XCTAssert(gameScene.isBlurred())
+        gameScene.showEndGameEffect()
+        XCTAssert(gameScene.isShowingEndGameEffect())
     }
     
     func testUnblurScreen() {
-        gameScene.unblurScreen()
-        XCTAssert(!gameScene.isBlurred())
+        gameScene.hideEndGameEffect()
+        XCTAssert(!gameScene.isShowingEndGameEffect())
     }
     
     func testResetSwipePoints () {
@@ -75,9 +112,26 @@ class DMGameSceneTests: XCTestCase {
         XCTAssertNotNil(gameScene.childNode(withName: UINames.dartboardNode))
     }
     
-    func testShowEndGameScreen() {
-//        gameScene.showEndGameScreen()
-//        XCTAssert(XCTAssertNotNil(gameScene.childNode(withName: UINames.endGameScreen)))
+    func testDartIsNotFlyingAfterTouchStartAtDart() {
+        gameScene.handleTouchBegin(gameScene.dart.node.position)
+        XCTAssert(!gameScene.dart.isFlying())
+    }
+    
+    func testDartIsNotFlyingAfterTouchEndAtDartWithoutTouchStart() {
+        gameScene.handleTouchEnd(gameScene.dart.node.position)
+        XCTAssert(!gameScene.dart.isFlying())
+    }
+    
+    func testDartIsFlyingAfterTouchStartAtDartAndTouchEnd() {
+        gameScene.handleTouchBegin(gameScene.dart.node.position) // a point inside the dart node
+        gameScene.handleTouchEnd(gameScene.dart.node.position)
+        XCTAssert(gameScene.dart.isFlying())
+    }
+    
+    func testDartIsNotFlyingAfterTouchStartNotAtDart() {
+        gameScene.handleTouchBegin(CGPoint(x: -2000, y: -2000)) // some point way outside the canvas
+        gameScene.handleTouchEnd(gameScene.dart.node.position)
+        XCTAssert(!gameScene.dart.isFlying())
     }
 
     func testPerformanceExample() {

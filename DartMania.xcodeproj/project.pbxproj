@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		401406CD21D3E15C006D7F6F /* GameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */; };
 		401406CF21D438D3006D7F6F /* DartGameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401406CE21D438D3006D7F6F /* DartGameSettings.swift */; };
+		4015C0DA22343CBC00DBDF16 /* DMDartGameSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4015C0D922343CBC00DBDF16 /* DMDartGameSettingsTests.swift */; };
 		40184154217CC17C0073477A /* Dartboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40184153217CC17C0073477A /* Dartboard.swift */; };
 		40184156217CC6490073477A /* DartboardElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40184155217CC6490073477A /* DartboardElement.swift */; };
 		401B13CB220378A4000EE2D7 /* DartManiaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B13CA220378A4000EE2D7 /* DartManiaUITests.swift */; };
@@ -57,6 +58,7 @@
 /* Begin PBXFileReference section */
 		401406CC21D3E15C006D7F6F /* GameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsViewController.swift; sourceTree = "<group>"; };
 		401406CE21D438D3006D7F6F /* DartGameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartGameSettings.swift; sourceTree = "<group>"; };
+		4015C0D922343CBC00DBDF16 /* DMDartGameSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDartGameSettingsTests.swift; sourceTree = "<group>"; };
 		40184153217CC17C0073477A /* Dartboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dartboard.swift; sourceTree = "<group>"; };
 		40184155217CC6490073477A /* DartboardElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartboardElement.swift; sourceTree = "<group>"; };
 		401B13C8220378A4000EE2D7 /* DartManiaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DartManiaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 				40644DF022032DBF00EC9245 /* DMDartboardTests.swift */,
 				40BB465F2225CF110015397B /* DMGameTests.swift */,
 				40BB466122266C530015397B /* DMGameSceneTests.swift */,
+				4015C0D922343CBC00DBDF16 /* DMDartGameSettingsTests.swift */,
 				401B5AE921DE34F000B9349B /* Info.plist */,
 			);
 			path = DartManiaTests;
@@ -421,6 +424,7 @@
 			files = (
 				40BB46602225CF110015397B /* DMGameTests.swift in Sources */,
 				40BB466222266C530015397B /* DMGameSceneTests.swift in Sources */,
+				4015C0DA22343CBC00DBDF16 /* DMDartGameSettingsTests.swift in Sources */,
 				40644DF122032DBF00EC9245 /* DMDartboardTests.swift in Sources */,
 				401B5AE821DE34F000B9349B /* DMHelperTests.swift in Sources */,
 			);

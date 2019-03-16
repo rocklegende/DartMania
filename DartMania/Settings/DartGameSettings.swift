@@ -18,11 +18,25 @@ class DartGameSettings {
     }
     
     func setMode(points: Int) {
-        mode = points
+        let modeIsAvailable = Settings.availableModes.contains("\(points)")
+        
+        if (modeIsAvailable) {
+            mode = points
+        } else {
+            print("You tried to set the mode to unavailable mode \(points). Defaulting to 501 Points for this Game.")
+            mode = 501
+        }
     }
     
-    func setPlayerCount(count: Int) {
-        playerCount = count
+    func setNumberOfPlayers(_ number: Int) {
+        let numberOfPlayersIsAvailable = Settings.availablePlayerCounts.contains("\(number)")
+        
+        if (numberOfPlayersIsAvailable) {
+            playerCount = number
+        } else {
+            print("You tried to set the number of players to unavailable number \(number). Defaulting to 2 Player for this Game.")
+            playerCount = 2
+        }
     }
     
     func getMode() -> Int {

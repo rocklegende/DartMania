@@ -42,11 +42,6 @@ class DMGameTests: XCTestCase {
         game.stop()
         XCTAssert(game.isFinished())
     }
-
-    func testGettingToZeroPointsFinishesGame() {
-        game.updatePoints(hitPoints: game.settings.getMode())
-        XCTAssert(game.isFinished())
-    }
     
     func testOverThrowingSwitchesToNextPlayer() {
         let prevCurrentPlayer = game.currentPlayer
@@ -105,12 +100,6 @@ class DMGameTests: XCTestCase {
         game.restart()
         XCTAssert(pointsOfAllPlayersIsSetTo(value: game.settings.getMode()))
         XCTAssert(firstPlayerOfGameIsActive())
-    }
-    
-    func testThrowingImpossibleValuesLeadsToFailure() {
-        let pointsThrown = -10
-        game.updatePoints(hitPoints: pointsThrown)
-        //XCTAssert()
     }
 
 }
