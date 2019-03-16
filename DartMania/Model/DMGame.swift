@@ -105,14 +105,6 @@ class DMGame: NSObject {
         self.throwsLeft = 3
     }
     
-    //    func addPlayer() {
-    //
-    //    }
-    //
-    //    func removePlayer() {
-    //
-    //    }
-    //
     func stateAsString() -> String {
         var stateString = ""
         for i in 0..<players.count {
@@ -125,8 +117,4 @@ class DMGame: NSObject {
         
         return stateString
     }
-    //
-    //    func start() {
-    //
-    //    }
 }

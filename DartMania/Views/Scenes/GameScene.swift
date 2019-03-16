@@ -10,19 +10,28 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    weak var endGameDecisionDelegate: EndGameDecisionDelegate!
-    weak var dartThrowDelegate: DartThrowDelegate!
-    
-    private var dart: Dart!
+    var dart: Dart!
     private var dartboard: Dartboard!
-    private var hitPointsLabel: SKLabelNode!
+    private var hitPointsLabel: SKLabelNode?
     private var pointsLeftLabels: [UILabel] = []
     private var swipeStartPoint: CGPoint?
     private var swipeEndPoint: CGPoint?
+    private var endGameVisualEffect = CIFilter(name:"CIGaussianBlur",withInputParameters: ["inputRadius": 10.0])
+    
+    weak var endGameDecisionDelegate: EndGameDecisionDelegate!
+    weak var dartThrowDelegate: DartThrowDelegate?
+    
+    var gravity: CGFloat {
+        get { return -20.0 }
+    }
     
     override func didMove(to view: SKView) {
+        setupScene()
+    }
+    
+    func setupScene() {
         setConfig()
-        setGravity(gravity: -20.0)
+        setGravity(self.gravity)
         addDartboard()
         addDart()
         addHitPointsUILabel()
@@ -30,38 +39,43 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touchPoint = touches.first?.location(in: self) {
-            if (dart.node.contains(touchPoint)) {
-                swipeStartPoint = touchPoint
-            } else {
-                print("You didnt touch the dartarrow")
-            }
+            handleTouchBegin(touchPoint)
         } else {
             print("error getting first touch position of dragevent")
         }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if (swipeStartPoint != nil) {
-            if let touchPoint = touches.first?.location(in: self) {
-                swipeEndPoint = touchPoint
-                performDartThrow()
-            } else {
-                print("error getting touch position of releasing touch of the dragevent")
-            }
+    internal func handleTouchBegin(_ touchPoint: CGPoint) {
+        if (dart.node.contains(touchPoint)) {
+            swipeStartPoint = touchPoint
+        } else {
+            print("You didnt touch the dartarrow")
         }
     }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touchPoint = touches.first?.location(in: self) {
+            handleTouchEnd(touchPoint)
+        } else {
+            print("error getting touch position of releasing touch of the dragevent")
+        }
     }
     
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-        
+    internal func handleTouchEnd(_ touchPoint: CGPoint) {
+        if (swipeStartPoint != nil) {
+            swipeEndPoint = touchPoint
+            performDartThrow()
+        }
     }
+    
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    }
+//
+//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    }
+//    override func update(_ currentTime: TimeInterval) {
+//        // Called before each frame is rendered
+//    }
     
     func initSceneFromGame(_ game: DMGame) {
         let numberOfPlayers = game.players.count
@@ -86,16 +100,16 @@ class GameScene: SKScene {
         self.isUserInteractionEnabled = true
     }
     
-    func setGravity(gravity: CGFloat) {
+    func setGravity(_ gravity: CGFloat) {
         physicsWorld.gravity = CGVector(dx: 0.0, dy: gravity)
     }
     
     func addHitPointsUILabel() {
         self.hitPointsLabel = SKLabelNode(text: "")
-        self.hitPointsLabel.name = UINames.hitPointsLabel
-        self.hitPointsLabel.fontSize = 60
-        self.hitPointsLabel.position = CGPoint(x: 0, y: -400)
-        self.addChild(self.hitPointsLabel)
+        self.hitPointsLabel!.name = UINames.hitPointsLabel
+        self.hitPointsLabel!.fontSize = 60
+        self.hitPointsLabel!.position = CGPoint(x: 0, y: -400)
+        self.addChild(self.hitPointsLabel!)
     }
     
     func addDart() {
@@ -111,26 +125,42 @@ class GameScene: SKScene {
     func performDartThrow() {
         let directionVector = Helper.getDirectionVectorFromSwipePoints(startPoint: swipeStartPoint!, endPoint: swipeEndPoint!)
         let angles = Helper.getAngles(directionVector: directionVector)
-        dart.toss(angles: angles) { [unowned self](successfulThrow) in
+        
+        blockInteractionWithDartArrow()
+        dart.toss(angles: angles) { (successfulThrow) in
             if (successfulThrow) {
                 self.handleCompletedThrow()
             }
         }
     }
     
+    func blockInteractionWithDartArrow() {
+        isUserInteractionEnabled = false
+    }
+    
+    func activateInteractionWithDartArrow() {
+        isUserInteractionEnabled = true
+    }
+    
     func handleCompletedThrow() {
         self.evaluateThrow()
-        //self.resetPositionOfDart()
         self.resetSwipePoints()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+            self.dart.resetToStartPosition()
+            self.activateInteractionWithDartArrow()
+        })
     }
     
     func evaluateThrow() {
         let dartTouchPoint = CGPoint(x: dart.node.frame.minX, y: dart.node.frame.minY)
         let hitPoints = dartboard.getHitPoints(point: dartTouchPoint)
-        hitPointsLabel.text = "\(hitPoints)"
-        dartThrowDelegate.didEvaluateThrow(hitPoints: hitPoints)
         
-        handlePlayerWon(player: 0)
+        precondition(
+            hitPoints >= 0 && hitPoints <= 3 * Settings.pointsArray.max()!,
+            "you can't throw points that are < 0 or > \(Settings.pointsArray.max()! * 3)"
+        )
+        hitPointsLabel?.text = "\(hitPoints)"
+        dartThrowDelegate?.didEvaluateThrow(hitPoints: hitPoints)
     }
     
     func resetSwipePoints() {
@@ -164,7 +194,7 @@ class GameScene: SKScene {
     }
     
     func handlePlayerWon(player: Int) {
-        blurScreen()
+        showEndGameEffect()
         showEndGameScreen()
     }
     
@@ -174,20 +204,18 @@ class GameScene: SKScene {
         self.view?.addSubview(endGameView)
     }
     
-    
-    func blurScreen() {
-        let  blur = CIFilter(name:"CIGaussianBlur",withInputParameters: ["inputRadius": 10.0])
-        self.filter = blur
+    func showEndGameEffect() {
+        self.filter = endGameVisualEffect
         self.shouldRasterize = true
         self.shouldEnableEffects = true
     }
     
-    func unblurScreen() {
+    func hideEndGameEffect() {
         self.filter = nil
     }
     
-    func isBlurred() -> Bool {
-        return self.filter?.name == "CIGaussianBlur"
+    func isShowingEndGameEffect() -> Bool {
+        return self.filter != nil
     }
     
     override func willMove(from view: SKView) {
@@ -201,7 +229,7 @@ class GameScene: SKScene {
 
 extension GameScene : EndGameDecisionDelegate {
     func didTapRestartButton() {
-        unblurScreen()
+        hideEndGameEffect()
         endGameDecisionDelegate.didTapRestartButton()
     }
     

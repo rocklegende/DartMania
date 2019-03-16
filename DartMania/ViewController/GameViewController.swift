@@ -26,16 +26,10 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             if let scene = GameScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFit
-                
-                // get notified if the presented game wants to return to the menu
-                scene.endGameDecisionDelegate = self
-                scene.dartThrowDelegate = self
                 self.scene = scene
+                setupScene()
                 view.presentScene(scene)
                 scene.initSceneFromGame(game!)
-                
             }
             view.ignoresSiblingOrder = true
             view.showsFPS = true
@@ -49,6 +43,16 @@ class GameViewController: UIViewController {
         if let view = self.view as! SKView? {
             view.presentScene(nil)
         }
+    }
+    
+    func setupScene() {
+        scene!.scaleMode = .aspectFit
+        scene!.endGameDecisionDelegate = self
+        scene!.dartThrowDelegate = self
+    }
+    
+    func presentScene() {
+        
     }
     
     func startGamePropertyObservations() {
