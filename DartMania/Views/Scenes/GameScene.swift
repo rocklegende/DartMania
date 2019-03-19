@@ -22,7 +22,7 @@ class GameScene: SKScene {
     weak var dartThrowDelegate: DartThrowDelegate?
     
     var gravity: CGFloat {
-        get { return -20.0 }
+        get { return -50.0 }
     }
     
     override func didMove(to view: SKView) {
@@ -148,6 +148,7 @@ class GameScene: SKScene {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
             self.dart.resetToStartPosition()
             self.activateInteractionWithDartArrow()
+            self.dart.resetToNormalSize()
         })
     }
     
