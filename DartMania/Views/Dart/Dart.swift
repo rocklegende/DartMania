@@ -10,13 +10,19 @@ import UIKit
 import GameplayKit
 
 class Dart: SKSpriteNode {
-    private var startPosition = CGPoint(x: 0, y: -200)
+    private var startPosition = CGPoint(x: 0, y: -400)
     private var isCurrentlyFlying = false
-    private var sizeScaleFactor: CGFloat = 0.4
+    private var yScaleAnimationTargetValue: CGFloat = -0.2
+    private var xScaleAnimationTargetValue: CGFloat = 0.4
     private var dartHangTime: TimeInterval = 0.5
-    private var timeTillNextDartCanBeThrown: TimeInterval = 0.5
     private var swipeStartPoint: CGPoint?
     private var swipeEndPoint: CGPoint?
+    
+    var positionOfTip: CGPoint {
+        get {
+            return CGPoint(x: self.frame.midX, y: self.frame.minY)
+        }
+    }
     var isOnDartboard: Bool = false
     weak var dartThrowDelegate: DartThrowDelegate?
     
@@ -29,7 +35,6 @@ class Dart: SKSpriteNode {
         isUserInteractionEnabled = true
         position = startPosition
         anchorPoint = CGPoint(x: 0.5, y: 0)
-        
     }
     
     func setupPhysicsBody() {
@@ -79,15 +84,13 @@ class Dart: SKSpriteNode {
         }
     }
     
-    func handleCompletedThrow() {
-        
+    internal func performActionsAfterDartHitTheDartboard() {
+        self.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        self.physicsBody?.affectedByGravity = false
+        self.isCurrentlyFlying = false
+        isOnDartboard = true
+        dartThrowDelegate?.dartDidTouchDartboard(dart: self)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
     
     func toss(angles: TossingAngles, hitDartboard: @escaping (Bool) -> ()) {
         let directionVector = Helper.getDirectionVector(angles: angles)
@@ -101,6 +104,14 @@ class Dart: SKSpriteNode {
         })
     }
     
+    internal func runScaleAnimation() {
+        let yScaleAction = SKAction.scaleY(to: yScaleAnimationTargetValue, duration: dartHangTime)
+        run(yScaleAction)
+        
+        let xScaleAction = SKAction.scaleX(to: xScaleAnimationTargetValue, duration: dartHangTime)
+        run(xScaleAction)
+    }
+    
     internal func applyImpulse(vector: CGVector) {
         physicsBody?.applyImpulse(
             CGVector(
@@ -110,20 +121,11 @@ class Dart: SKSpriteNode {
         )
     }
     
-    internal func runScaleAnimation() {
-        let scaleAction = SKAction.scale(to: sizeScaleFactor, duration: dartHangTime)
-        run(scaleAction)
-    }
-    internal func performActionsAfterDartHitTheDartboard() {
-        self.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        self.physicsBody?.affectedByGravity = false
-        self.isCurrentlyFlying = false
-        isOnDartboard = true
-        dartThrowDelegate?.dartDidTouchDartboard(dart: self)
-        
-    }
-    
     func isFlying() -> Bool {
         return isCurrentlyFlying
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

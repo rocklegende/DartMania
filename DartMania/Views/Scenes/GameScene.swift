@@ -90,8 +90,8 @@ class GameScene: SKScene {
     }
     
     func evaluateThrowOfDart(dart: Dart) {
-        let dartTouchPoint = CGPoint(x: dart.frame.minX, y: dart.frame.minY)
-        let hitPoints = dartboard.getHitPoints(point: dartTouchPoint)
+        let positionOfTip = dart.positionOfTip
+        let hitPoints = dartboard.getHitPoints(point: positionOfTip)
         
         precondition(
             hitPoints >= 0 && hitPoints <= 3 * Settings.pointsArray.max()!,
