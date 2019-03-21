@@ -10,7 +10,7 @@ import Foundation
 
 class DMGame: NSObject {
      
-    private var throwsLeft: Int = 3
+    var throwsLeft: Int = 3
     private var pointsMadeInCurrentThrow: Int = 0
     @objc dynamic var isOver: Bool = false
     @objc dynamic var players: [[String : Any]] = []
@@ -54,6 +54,7 @@ class DMGame: NSObject {
     }
      
     func updatePoints (hitPoints: Int) {
+        decreaseThrowsLeft()
         if let pointsLeft = players[currentPlayer]["points"] as? Int {
             if (pointsLeft - hitPoints > 0) {
                 players[currentPlayer].updateValue(pointsLeft - hitPoints, forKey: "points")
@@ -65,7 +66,12 @@ class DMGame: NSObject {
                 switchToNextPlayer()
             }
         }
-        decreaseThrowsLeft()
+        
+        if (throwsLeft == 0) {
+            switchToNextPlayer()
+        }
+        
+        NotificationCenter.default.post(name: Notification.Name("didChangeState"), object: nil)
     }
      
 
@@ -75,12 +81,13 @@ class DMGame: NSObject {
     }
      
     func switchToNextPlayer() {
+        resetThrowsLeft()
+        resetPointsMadeInCurrentThrow()
         players[currentPlayer].updateValue(false, forKey: "isActive")
         increaseCurrentPlayer()
         players[currentPlayer].updateValue(true, forKey: "isActive")
         
-        resetThrowsLeft()
-        resetPointsMadeInCurrentThrow()
+        NotificationCenter.default.post(name: Notification.Name("didSwitchPlayer"), object: nil)
     }
      
     func resetPointsMadeInCurrentThrow() {
@@ -96,13 +103,14 @@ class DMGame: NSObject {
     
     func decreaseThrowsLeft() {
         throwsLeft -= 1
-        if (throwsLeft == 0) {
-            switchToNextPlayer()
-        }
     }
     
     func resetThrowsLeft() {
         self.throwsLeft = 3
+    }
+    
+    func getThrowsLeft() -> Int {
+        return self.throwsLeft
     }
     
     func stateAsString() -> String {

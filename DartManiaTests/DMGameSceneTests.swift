@@ -92,10 +92,6 @@ class DMGameSceneTests: XCTestCase, EndGameDecisionDelegate {
         XCTAssert(!gameScene.isShowingEndGameEffect())
     }
     
-    func testResetSwipePoints () {
-        gameScene.resetSwipePoints()
-        XCTAssert(gameScene.getSwipePoints() == [nil, nil])
-    }
     
     func testAddHitPointsLabel() {
         gameScene.addHitPointsUILabel()
@@ -112,27 +108,6 @@ class DMGameSceneTests: XCTestCase, EndGameDecisionDelegate {
         XCTAssertNotNil(gameScene.childNode(withName: UINames.dartboardNode))
     }
     
-    func testDartIsNotFlyingAfterTouchStartAtDart() {
-        gameScene.handleTouchBegin(gameScene.dart.node.position)
-        XCTAssert(!gameScene.dart.isFlying())
-    }
-    
-    func testDartIsNotFlyingAfterTouchEndAtDartWithoutTouchStart() {
-        gameScene.handleTouchEnd(gameScene.dart.node.position)
-        XCTAssert(!gameScene.dart.isFlying())
-    }
-    
-    func testDartIsFlyingAfterTouchStartAtDartAndTouchEnd() {
-        gameScene.handleTouchBegin(gameScene.dart.node.position) // a point inside the dart node
-        gameScene.handleTouchEnd(gameScene.dart.node.position)
-        XCTAssert(gameScene.dart.isFlying())
-    }
-    
-    func testDartIsNotFlyingAfterTouchStartNotAtDart() {
-        gameScene.handleTouchBegin(CGPoint(x: -2000, y: -2000)) // some point way outside the canvas
-        gameScene.handleTouchEnd(gameScene.dart.node.position)
-        XCTAssert(!gameScene.dart.isFlying())
-    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

@@ -11,7 +11,7 @@ import UIKit
 class Settings {
     
     // GAMEPLAY //
-    static let availableModes: [String] = ["301", "501", "701"]
+    static let availableModes: [String] = ["30","301", "501", "701"]
     static let availablePlayerCounts: [String] = ["1", "2", "3", "4"]
     
     // DARTBOARD RADIUSESS //

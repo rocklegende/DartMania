@@ -43,6 +43,24 @@ class DMGameTests: XCTestCase {
         XCTAssert(game.isFinished())
     }
     
+    func testThrowing3TimesDecreasesThrowsLeftCorrectly() {
+        XCTAssert(game.getThrowsLeft() == 3)
+        game.updatePoints(hitPoints: 60)
+        XCTAssert(game.getThrowsLeft() == 2)
+        game.updatePoints(hitPoints: 80)
+        XCTAssert(game.getThrowsLeft() == 1)
+        game.updatePoints(hitPoints: 80)
+        XCTAssert(game.getThrowsLeft() == 3)
+    }
+    
+    func testOverThrowingResetsThrowsLeftCorrectly() {
+        XCTAssert(game.getThrowsLeft() == 3)
+        game.updatePoints(hitPoints: 60)
+        XCTAssert(game.getThrowsLeft() == 2)
+        game.updatePoints(hitPoints: 9999)
+        XCTAssert(game.getThrowsLeft() == 3)
+    }
+    
     func testOverThrowingSwitchesToNextPlayer() {
         let prevCurrentPlayer = game.currentPlayer
         game.updatePoints(hitPoints: game.settings.getMode() + 1)
@@ -50,13 +68,6 @@ class DMGameTests: XCTestCase {
         
         XCTAssert(prevCurrentPlayer != nextCurrentPlayer)
         XCTAssertFalse(game.isFinished())
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
     }
     
     func testSwitchPlayer() {
@@ -72,17 +83,17 @@ class DMGameTests: XCTestCase {
     
     func testThrowingThreeTimesSwitchesPlayer() {
         let prevCurrentPlayer = game.currentPlayer
-        game.decreaseThrowsLeft()
-        game.decreaseThrowsLeft()
-        game.decreaseThrowsLeft()
+        game.updatePoints(hitPoints: 60)
+        game.updatePoints(hitPoints: 80)
+        game.updatePoints(hitPoints: 61)
         let nextCurrentPlayer = game.currentPlayer
         XCTAssert(prevCurrentPlayer != nextCurrentPlayer)
     }
     
     func testThrowingTwoTimesDoesntSwitchPlayer() {
         let prevCurrentPlayer = game.currentPlayer
-        game.decreaseThrowsLeft()
-        game.decreaseThrowsLeft()
+        game.updatePoints(hitPoints: 60)
+        game.updatePoints(hitPoints: 80)
         let nextCurrentPlayer = game.currentPlayer
         XCTAssert(prevCurrentPlayer == nextCurrentPlayer)
     }
