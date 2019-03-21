@@ -41,16 +41,6 @@ class GameScene: SKScene {
         updateStateAccordingTo(game)
     }
     
-    fileprivate func removeAllDartsFromDartBoard() {
-        for childNode in children {
-            if let dart = childNode as? Dart {
-                if (dart.isOnDartboard) {
-                    dart.removeFromParent()
-                }
-            }
-        }
-    }
-    
     func updateStateAccordingTo(_ game: DMGame) {
         for i in 0..<game.players.count {
             pointsLeftLabels[i].text = "\(game.players[i]["points"] as! Int)"
@@ -155,8 +145,18 @@ class GameScene: SKScene {
     }
     
     func handleChangeOfPlayer() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + waitTimeAfterEachThrow) {
             self.removeAllDartsFromDartBoard()
+        }
+    }
+    
+    fileprivate func removeAllDartsFromDartBoard() {
+        for childNode in children {
+            if let dart = childNode as? Dart {
+                if (dart.isOnDartboard) {
+                    dart.removeFromParent()
+                }
+            }
         }
     }
 }
@@ -178,7 +178,6 @@ extension GameScene : DartThrowDelegate {
     func didEvaluateThrow(hitPoints: Int) {
         //
     }
-    
     func dartDidTouchDartboard(dart: Dart) {
         self.evaluateThrowOfDart(dart: dart)
     }
