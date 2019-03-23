@@ -68,6 +68,7 @@ class Dart: SKSpriteNode {
     internal func handleTouchEnd(_ touchPoint: CGPoint) {
         if (swipeStartPoint != nil) {
             swipeEndPoint = touchPoint
+            //deactivate glow
             performDartThrow()
         }
     }

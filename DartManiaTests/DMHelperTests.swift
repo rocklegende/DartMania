@@ -43,12 +43,4 @@ class DMHelperTests: XCTestCase {
         XCTAssert(Helper.getAngles(directionVector: dv).xAngle == TossingAngles(xAngle: 0, yAngle: 0).xAngle)
         XCTAssert(Helper.getAngles(directionVector: dv).yAngle == TossingAngles(xAngle: 0, yAngle: 0).yAngle)
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }

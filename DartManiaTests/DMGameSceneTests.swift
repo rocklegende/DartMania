@@ -19,7 +19,6 @@ class DMGameSceneTests: XCTestCase, EndGameDecisionDelegate {
         
     }
     
-    
     var gameScene: GameScene!
     var dartboard: Dartboard!
     
@@ -28,10 +27,6 @@ class DMGameSceneTests: XCTestCase, EndGameDecisionDelegate {
         gameScene = GameScene()
         gameScene.addDart()
         gameScene.addDartboard()
-        
-//        gameScene.settings = DartGameSettings()
-//        gameScene.game = DMGame(settings: gameScene.settings)
-        
     }
 
     override func tearDown() {
