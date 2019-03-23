@@ -17,7 +17,7 @@ class GameScene: SKScene {
     private var waitTimeAfterEachThrow: TimeInterval = 1
     
     weak var endGameDecisionDelegate: EndGameDecisionDelegate!
-    weak var dartThrowDelegate: DartThrowDelegate?
+    weak var dartThrowEvaluatorDelegate: DartThrowEvaluatorDelegate?
     
     var gravity: CGFloat {
         get { return -50.0 }
@@ -51,7 +51,7 @@ class GameScene: SKScene {
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + waitTimeAfterEachThrow, execute: {
             self.addDart()
         })
     }
@@ -88,7 +88,7 @@ class GameScene: SKScene {
             "you can't throw points that are < 0 or > \(Settings.pointsArray.max()! * 3)"
         )
         hitPointsLabel?.text = "\(hitPoints)"
-        dartThrowDelegate?.didEvaluateThrow(hitPoints: hitPoints)
+        dartThrowEvaluatorDelegate?.didEvaluateThrow(hitPoints: hitPoints)
     }
     
     func addPointsLeftLabel(text: String) {
@@ -175,9 +175,6 @@ extension GameScene : EndGameDecisionDelegate {
 }
 
 extension GameScene : DartThrowDelegate {
-    func didEvaluateThrow(hitPoints: Int) {
-        //
-    }
     func dartDidTouchDartboard(dart: Dart) {
         self.evaluateThrowOfDart(dart: dart)
     }

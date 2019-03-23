@@ -9,6 +9,5 @@
 import Foundation
 
 protocol DartThrowDelegate: class {
-    func didEvaluateThrow(hitPoints: Int)
     func dartDidTouchDartboard(dart: Dart)
 }

@@ -14,7 +14,7 @@ class Dart: SKSpriteNode {
     private var isCurrentlyFlying = false
     private var yScaleAnimationTargetValue: CGFloat = -0.2
     private var xScaleAnimationTargetValue: CGFloat = 0.4
-    private var dartHangTime: TimeInterval = 0.5
+    private var hangTime: TimeInterval = 0.5
     private var swipeStartPoint: CGPoint?
     private var swipeEndPoint: CGPoint?
     
@@ -99,16 +99,16 @@ class Dart: SKSpriteNode {
         
         runScaleAnimation()
         applyImpulse(vector: directionVector)
-        DispatchQueue.main.asyncAfter(deadline: .now() + dartHangTime, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + hangTime, execute: {
             hitDartboard(true)
         })
     }
     
     internal func runScaleAnimation() {
-        let yScaleAction = SKAction.scaleY(to: yScaleAnimationTargetValue, duration: dartHangTime)
+        let yScaleAction = SKAction.scaleY(to: yScaleAnimationTargetValue, duration: hangTime)
         run(yScaleAction)
         
-        let xScaleAction = SKAction.scaleX(to: xScaleAnimationTargetValue, duration: dartHangTime)
+        let xScaleAction = SKAction.scaleX(to: xScaleAnimationTargetValue, duration: hangTime)
         run(xScaleAction)
     }
     

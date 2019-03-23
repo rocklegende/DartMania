@@ -29,6 +29,7 @@
 		4062927721C585E6004AC627 /* Dart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062927621C585E6004AC627 /* Dart.swift */; };
 		4062927921C5908D004AC627 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062927821C5908D004AC627 /* Settings.swift */; };
 		40644DF122032DBF00EC9245 /* DMDartboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40644DF022032DBF00EC9245 /* DMDartboardTests.swift */; };
+		40ABC53C22462412002BB552 /* DartThrowEvaluatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ABC53B22462412002BB552 /* DartThrowEvaluatorDelegate.swift */; };
 		40BB465A221EB4A40015397B /* DMGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BB4659221EB4A40015397B /* DMGame.swift */; };
 		40BB46602225CF110015397B /* DMGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BB465F2225CF110015397B /* DMGameTests.swift */; };
 		40BB466222266C530015397B /* DMGameSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BB466122266C530015397B /* DMGameSceneTests.swift */; };
@@ -77,6 +78,7 @@
 		4062927621C585E6004AC627 /* Dart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dart.swift; sourceTree = "<group>"; };
 		4062927821C5908D004AC627 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		40644DF022032DBF00EC9245 /* DMDartboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDartboardTests.swift; sourceTree = "<group>"; };
+		40ABC53B22462412002BB552 /* DartThrowEvaluatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartThrowEvaluatorDelegate.swift; sourceTree = "<group>"; };
 		40BB4659221EB4A40015397B /* DMGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGame.swift; sourceTree = "<group>"; };
 		40BB465F2225CF110015397B /* DMGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGameTests.swift; sourceTree = "<group>"; };
 		40BB466122266C530015397B /* DMGameSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGameSceneTests.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				40F8871E222C9BDF00945993 /* EndGameDecisionDelegate.swift */,
 				40F88720222C9C0500945993 /* GameSettingsDecisionDelegate.swift */,
 				40F88722222C9C5200945993 /* DartThrowDelegate.swift */,
+				40ABC53B22462412002BB552 /* DartThrowEvaluatorDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				40207F62214ED735002E71B4 /* GameViewController.swift in Sources */,
 				401406CF21D438D3006D7F6F /* DartGameSettings.swift in Sources */,
 				40F8871F222C9BDF00945993 /* EndGameDecisionDelegate.swift in Sources */,
+				40ABC53C22462412002BB552 /* DartThrowEvaluatorDelegate.swift in Sources */,
 				40BB465A221EB4A40015397B /* DMGame.swift in Sources */,
 				40184156217CC6490073477A /* DartboardElement.swift in Sources */,
 				40207F76215B5FA5002E71B4 /* Helper.swift in Sources */,

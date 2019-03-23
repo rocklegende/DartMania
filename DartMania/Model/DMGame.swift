@@ -9,11 +9,12 @@
 import Foundation
 
 class DMGame: NSObject {
-     
-    var throwsLeft: Int = 3
+    
     private var pointsMadeInCurrentThrow: Int = 0
+    
     @objc dynamic var isOver: Bool = false
     @objc dynamic var players: [[String : Any]] = []
+    var throwsLeft: Int = 3
     var currentPlayer: Int = 0
     var settings: DartGameSettings
     
@@ -36,11 +37,15 @@ class DMGame: NSObject {
         for i in 0..<numberOfPlayers {
             players[i].updateValue(value, forKey: key)
         }
+        
+        didChangeState()
     }
     
     private func setPlayerActive(withNumber number: Int) {
         updateValueForAllPlayers(value: false, key: "isActive")
         players[number].updateValue(true, forKey: "isActive")
+        
+        didChangeState()
     }
     
     func stop() {
@@ -71,10 +76,12 @@ class DMGame: NSObject {
             switchToNextPlayer()
         }
         
+        didChangeState()
+    }
+    
+    func didChangeState() {
         NotificationCenter.default.post(name: Notification.Name("didChangeState"), object: nil)
     }
-     
-
     
     func isFinished() -> Bool {
         return isOver

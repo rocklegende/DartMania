@@ -48,7 +48,7 @@ class GameViewController: UIViewController {
     func setupScene() {
         scene!.scaleMode = .aspectFit
         scene!.endGameDecisionDelegate = self
-        scene!.dartThrowDelegate = self
+        scene!.dartThrowEvaluatorDelegate = self
     }
     
     func presentScene() {
@@ -120,12 +120,7 @@ extension GameViewController : EndGameDecisionDelegate {
     }
 }
 
-extension GameViewController : DartThrowDelegate {
-    
-    func dartDidTouchDartboard(dart: Dart) {
-        //
-    }
-    
+extension GameViewController : DartThrowEvaluatorDelegate {
     func didEvaluateThrow(hitPoints: Int) {
         game?.updatePoints(hitPoints: hitPoints)
     }

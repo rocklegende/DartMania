@@ -28,5 +28,13 @@ class DMDartTests: XCTestCase {
         dart.handleTouchEnd(dart.position)
         XCTAssert(dart.isFlying())
     }
+    
+    func testActionsAfterDartHitAreCorrect() {
+        dart.performActionsAfterDartHitTheDartboard()
+        XCTAssert(dart.isOnDartboard)
+        XCTAssert(dart.physicsBody?.velocity == CGVector(dx: 0, dy: 0))
+        XCTAssertFalse(dart.physicsBody!.affectedByGravity)
+        XCTAssertFalse(dart.isFlying())
+    }
 
 }
