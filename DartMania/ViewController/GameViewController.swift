@@ -31,7 +31,7 @@ class GameViewController: UIViewController {
                 view.presentScene(scene)
                 scene.initSceneFromGame(game!)
             }
-            view.ignoresSiblingOrder = true
+            view.ignoresSiblingOrder = false
             view.showsFPS = true
             view.showsNodeCount = true
         }
@@ -48,7 +48,7 @@ class GameViewController: UIViewController {
     func setupScene() {
         scene!.scaleMode = .aspectFit
         scene!.endGameDecisionDelegate = self
-        scene!.dartThrowDelegate = self
+        scene!.dartThrowEvaluatorDelegate = self
     }
     
     func presentScene() {
@@ -56,16 +56,25 @@ class GameViewController: UIViewController {
     }
     
     func startGamePropertyObservations() {
-        let playerObservation = game.observe(\.players) { (game, change) in
-            self.scene!.updateStateAccordingTo(game)
-        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onGameStateChange), name: Notification.Name("didChangeState"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onPlayerChange), name: Notification.Name("didSwitchPlayer"), object: nil)
+        
+        
         let isGameFinishedObservation = game.observe(\.isOver) { (game, change) in
             if (game.isOver) {
                 self.scene!.handlePlayerWon(player: game.currentPlayer)
             }
         }
-        observations.append(playerObservation)
         observations.append(isGameFinishedObservation)
+    }
+    
+    @objc func onGameStateChange() {
+        self.scene!.updateStateAccordingTo(game)
+    }
+    
+    @objc func onPlayerChange() {
+        self.scene!.handleChangeOfPlayer()
     }
     
     internal func stopGamePropertyObservations() {
@@ -107,12 +116,11 @@ extension GameViewController : EndGameDecisionDelegate {
         dismiss(animated: true, completion: nil)
         if let view = self.view as! SKView? {
             view.presentScene(nil)
-            
         }
     }
 }
 
-extension GameViewController : DartThrowDelegate {
+extension GameViewController : DartThrowEvaluatorDelegate {
     func didEvaluateThrow(hitPoints: Int) {
         game?.updatePoints(hitPoints: hitPoints)
     }

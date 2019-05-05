@@ -19,7 +19,6 @@ class DMGameSceneTests: XCTestCase, EndGameDecisionDelegate {
         
     }
     
-    
     var gameScene: GameScene!
     var dartboard: Dartboard!
     
@@ -28,10 +27,6 @@ class DMGameSceneTests: XCTestCase, EndGameDecisionDelegate {
         gameScene = GameScene()
         gameScene.addDart()
         gameScene.addDartboard()
-        
-//        gameScene.settings = DartGameSettings()
-//        gameScene.game = DMGame(settings: gameScene.settings)
-        
     }
 
     override func tearDown() {
@@ -92,10 +87,6 @@ class DMGameSceneTests: XCTestCase, EndGameDecisionDelegate {
         XCTAssert(!gameScene.isShowingEndGameEffect())
     }
     
-    func testResetSwipePoints () {
-        gameScene.resetSwipePoints()
-        XCTAssert(gameScene.getSwipePoints() == [nil, nil])
-    }
     
     func testAddHitPointsLabel() {
         gameScene.addHitPointsUILabel()
@@ -111,34 +102,4 @@ class DMGameSceneTests: XCTestCase, EndGameDecisionDelegate {
         gameScene.addDartboard()
         XCTAssertNotNil(gameScene.childNode(withName: UINames.dartboardNode))
     }
-    
-    func testDartIsNotFlyingAfterTouchStartAtDart() {
-        gameScene.handleTouchBegin(gameScene.dart.node.position)
-        XCTAssert(!gameScene.dart.isFlying())
-    }
-    
-    func testDartIsNotFlyingAfterTouchEndAtDartWithoutTouchStart() {
-        gameScene.handleTouchEnd(gameScene.dart.node.position)
-        XCTAssert(!gameScene.dart.isFlying())
-    }
-    
-    func testDartIsFlyingAfterTouchStartAtDartAndTouchEnd() {
-        gameScene.handleTouchBegin(gameScene.dart.node.position) // a point inside the dart node
-        gameScene.handleTouchEnd(gameScene.dart.node.position)
-        XCTAssert(gameScene.dart.isFlying())
-    }
-    
-    func testDartIsNotFlyingAfterTouchStartNotAtDart() {
-        gameScene.handleTouchBegin(CGPoint(x: -2000, y: -2000)) // some point way outside the canvas
-        gameScene.handleTouchEnd(gameScene.dart.node.position)
-        XCTAssert(!gameScene.dart.isFlying())
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }

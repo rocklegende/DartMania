@@ -10,19 +10,17 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    var dart: Dart!
     private var dartboard: Dartboard!
     private var hitPointsLabel: SKLabelNode?
     private var pointsLeftLabels: [UILabel] = []
-    private var swipeStartPoint: CGPoint?
-    private var swipeEndPoint: CGPoint?
     private var endGameVisualEffect = CIFilter(name:"CIGaussianBlur",withInputParameters: ["inputRadius": 10.0])
+    private var waitTimeAfterEachThrow: TimeInterval = 1
     
     weak var endGameDecisionDelegate: EndGameDecisionDelegate!
-    weak var dartThrowDelegate: DartThrowDelegate?
+    weak var dartThrowEvaluatorDelegate: DartThrowEvaluatorDelegate?
     
     var gravity: CGFloat {
-        get { return -20.0 }
+        get { return -50.0 }
     }
     
     override func didMove(to view: SKView) {
@@ -30,52 +28,10 @@ class GameScene: SKScene {
     }
     
     func setupScene() {
-        setConfig()
         setGravity(self.gravity)
         addDartboard()
-        addDart()
         addHitPointsUILabel()
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touchPoint = touches.first?.location(in: self) {
-            handleTouchBegin(touchPoint)
-        } else {
-            print("error getting first touch position of dragevent")
-        }
-    }
-    
-    internal func handleTouchBegin(_ touchPoint: CGPoint) {
-        if (dart.node.contains(touchPoint)) {
-            swipeStartPoint = touchPoint
-        } else {
-            print("You didnt touch the dartarrow")
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touchPoint = touches.first?.location(in: self) {
-            handleTouchEnd(touchPoint)
-        } else {
-            print("error getting touch position of releasing touch of the dragevent")
-        }
-    }
-    
-    internal func handleTouchEnd(_ touchPoint: CGPoint) {
-        if (swipeStartPoint != nil) {
-            swipeEndPoint = touchPoint
-            performDartThrow()
-        }
-    }
-    
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//    }
-//
-//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-//    }
-//    override func update(_ currentTime: TimeInterval) {
-//        // Called before each frame is rendered
-//    }
     
     func initSceneFromGame(_ game: DMGame) {
         let numberOfPlayers = game.players.count
@@ -94,10 +50,10 @@ class GameScene: SKScene {
                 pointsLeftLabels[i].textColor = .red
             }
         }
-    }
-    
-    func setConfig() {
-        self.isUserInteractionEnabled = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + waitTimeAfterEachThrow, execute: {
+            self.addDart()
+        })
     }
     
     func setGravity(_ gravity: CGFloat) {
@@ -113,8 +69,9 @@ class GameScene: SKScene {
     }
     
     func addDart() {
-        self.dart = Dart()
-        self.addChild(dart.node!)
+        let dart = Dart()
+        dart.dartThrowDelegate = self
+        self.addChild(dart)
     }
     
     func addDartboard() {
@@ -122,56 +79,17 @@ class GameScene: SKScene {
         self.addChild(dartboard.node)
     }
     
-    func performDartThrow() {
-        let directionVector = Helper.getDirectionVectorFromSwipePoints(startPoint: swipeStartPoint!, endPoint: swipeEndPoint!)
-        let angles = Helper.getAngles(directionVector: directionVector)
-        
-        blockInteractionWithDartArrow()
-        dart.toss(angles: angles) { (successfulThrow) in
-            if (successfulThrow) {
-                self.handleCompletedThrow()
-            }
-        }
-    }
-    
-    func blockInteractionWithDartArrow() {
-        isUserInteractionEnabled = false
-    }
-    
-    func activateInteractionWithDartArrow() {
-        isUserInteractionEnabled = true
-    }
-    
-    func handleCompletedThrow() {
-        self.evaluateThrow()
-        self.resetSwipePoints()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
-            self.dart.resetToStartPosition()
-            self.activateInteractionWithDartArrow()
-        })
-    }
-    
-    func evaluateThrow() {
-        let dartTouchPoint = CGPoint(x: dart.node.frame.minX, y: dart.node.frame.minY)
-        let hitPoints = dartboard.getHitPoints(point: dartTouchPoint)
+    func evaluateThrowOfDart(dart: Dart) {
+        let positionOfTip = dart.positionOfTip
+        let hitPoints = dartboard.getHitPoints(point: positionOfTip)
         
         precondition(
             hitPoints >= 0 && hitPoints <= 3 * Settings.pointsArray.max()!,
             "you can't throw points that are < 0 or > \(Settings.pointsArray.max()! * 3)"
         )
         hitPointsLabel?.text = "\(hitPoints)"
-        dartThrowDelegate?.didEvaluateThrow(hitPoints: hitPoints)
+        dartThrowEvaluatorDelegate?.didEvaluateThrow(hitPoints: hitPoints)
     }
-    
-    func resetSwipePoints() {
-        swipeStartPoint = nil
-        swipeEndPoint = nil
-    }
-    
-    internal func getSwipePoints() -> [CGPoint?] {
-        return [swipeStartPoint, swipeEndPoint]
-    }
-    
     
     func addPointsLeftLabel(text: String) {
         let label = UILabel()
@@ -225,6 +143,22 @@ class GameScene: SKScene {
     internal func cleanUp() {
         self.removeAllChildren()
     }
+    
+    func handleChangeOfPlayer() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + waitTimeAfterEachThrow) {
+            self.removeAllDartsFromDartBoard()
+        }
+    }
+    
+    fileprivate func removeAllDartsFromDartBoard() {
+        for childNode in children {
+            if let dart = childNode as? Dart {
+                if (dart.isOnDartboard) {
+                    dart.removeFromParent()
+                }
+            }
+        }
+    }
 }
 
 extension GameScene : EndGameDecisionDelegate {
@@ -237,5 +171,11 @@ extension GameScene : EndGameDecisionDelegate {
         self.removeFromParent()
         self.view?.presentScene(nil)
         endGameDecisionDelegate.didTapReturnToMenuButton()
+    }
+}
+
+extension GameScene : DartThrowDelegate {
+    func dartDidTouchDartboard(dart: Dart) {
+        self.evaluateThrowOfDart(dart: dart)
     }
 }
