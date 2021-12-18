@@ -125,7 +125,7 @@ class DMGame: NSObject {
         for i in 0..<players.count {
             stateString += "Player \(i + 1): \(players[i]["points"] as! Int)"
             if (players[i]["isActive"] as! Bool) {
-                stateString += " -> ist dran"
+                stateString += " -> current turn"
             }
             stateString += "\n"
         }

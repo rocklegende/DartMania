@@ -15,7 +15,7 @@ class GameSettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.lightText
+        view.backgroundColor = UIColor.black
         view.accessibilityIdentifier = "gameSettingsView"
         
 //        let backgroundImageView = UIImageView(image: UIImage(named: "dartboard.jpg"))
