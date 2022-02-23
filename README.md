@@ -1,7 +1,7 @@
 # DartMania
 
 Just a fun little go at an dart game for iOS. 
-2D andand 3D version.
+2D and 3D version.
 
 ## 2D
 ![2D Version](https://user-images.githubusercontent.com/16197745/155379156-7a433a87-de16-436b-9592-e883e8a37d04.gif)
